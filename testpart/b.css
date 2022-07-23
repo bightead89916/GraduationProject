@@ -1,0 +1,24 @@
+img {
+    width: 0px;
+    left: 210px； transition: 0.5s；
+}
+
+h2 {
+    margin: 5px；color: navy
+}
+
+li {
+    width: 180px；
+}
+
+a {
+    transition: 0.5s；
+}
+
+a:hover {
+    background: lime
+}
+
+a:hover+img {
+    width: 240px；
+}

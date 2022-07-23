@@ -12,8 +12,6 @@ $(".btn.login").click(async() => { //連結metamask
         $("#username").html(user);
 
         test = new web3js.eth.Contract(abi, testAddress); //合約
-        userAccount = web3js.currentProvider.selectedAddress; //不明用途，取自CrappyBird 893行
-
     } catch (error) {
         alert(error.message);
     }

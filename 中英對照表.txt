@@ -1,0 +1,10 @@
+give_reward_down      成功給予獎懲
+index                 校方頁面
+prize_upload          商品上架頁面
+prize_detail          商品頁面
+give_reward_form      給予獎懲
+apply_reward_consent  獎勵申請_同意書
+apply_reward_form     獎勵申請_填寫表單
+give_reward_form      獎懲介面
+give_reward_consent   獎懲申請書
+student_register      學生註冊

@@ -1,3 +1,36 @@
+<?php
+session_start();
+
+$commodity_array = array();
+$page = 0;
+//取得現在頁數
+if(isset($_GET['page'])){
+    $page = $_GET['page'];
+}
+
+//連線資料庫
+try{
+    $pdo = new PDO('mysql:host=localhost:3307;dbname=graduation_project',"root","466110");
+    echo "成功連線";
+}catch (PDOException $e){
+    echo $e->getMessage();
+}
+//取得商品資訊
+try{
+    $sql = "SELECT * FROM `commodity`;";
+    $commodity_array = $pdo->query($sql);
+    $com_count = $commodity_array->rowCount();
+    //$page_count = intval($com_count/6);
+    $page_count = $com_count/6;
+}catch (PDOException $e){
+    echo $e->getMessage();
+}
+
+//關閉連接
+$pdo = null;
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -99,75 +132,34 @@
         <div class="row">
             <div class="col-12 col-md-9">
                 <div class="row">
+                    <?php $i = 0; foreach($commodity_array as $commodity) : ?>
+                    <?php if( $page*6 <= $i && $i < ($page+1)*6 ) : ?>
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="card" style="width: 18rem;">
-                            <img src="http://picsum.photos/500/300?random=1" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">商品名稱</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">我要兌換</a>
+                            <img src="<?php echo $commodity['picture'] ?>" class="card-img-top" alt="...">
+                            <div class="card-body" method="post">
+                                <h5 class="card-title"><?php echo $commodity['com_name'] ?></h5>
+                                <p class="card-text"><?php echo $commodity['introdu'] ?></p>
+                                <a class="btn btn-primary" href="/graduationProject/deleteCom.php?id=<?php echo $commodity['com_id'] ?>">我要兌換</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="http://picsum.photos/500/300?random=2" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">商品名稱</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">我要兌換</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="http://picsum.photos/500/300?random=3" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">商品名稱</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">我要兌換</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="http://picsum.photos/500/300?random=11" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">商品名稱</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">我要兌換</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="http://picsum.photos/500/300?random=12" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">商品名稱</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">我要兌換</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="http://picsum.photos/500/300?random=13" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">商品名稱</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">我要兌換</a>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endif; $i++;?>
+                    <?php endforeach; ?>
+
                 </div>
 
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm justify-content-center">
+                        <?php for($j=0; $j<$page_count; $j++) : ?>
+                        <?php if($page == $j) : ?>
                         <li class="page-item active" aria-current="page">
-                            <span class="page-link">1</span>
+                            <span class="page-link"><?php echo $j+1 ?></span>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <?php else : ?>
+                        <li class="page-item"><a class="page-link" href="/graduationProject/index.php?page=<?php echo $j ?>"><?php echo $j+1 ?></a></li>
+                        <?php endif;?>
+                        <?php endfor; ?>
                     </ul>
                 </nav>
 

@@ -100,6 +100,22 @@
             font-weight: bold;
             font-size: x-large;
         }
+        
+        .dropdown {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .leftNav {
+                display: none;
+            }
+            .container .rightDiv {
+                width: 100%;
+            }
+            .dropdown {
+                display: contents;
+            }
+        }
     </style>
 </head>
 
@@ -156,22 +172,37 @@
           </button>
         </div>
         <!--左邊的清單-->
-        <div class="navbar-collapse ui-layout-west ui-layout-resizer-west-closed">
-            <div class="leftNav">
-                <ul class="jd_menu_vertical" style="margin-left: 0; padding-left:0;">
+        <div class="leftNav" id="leftNav">
+            <div class="ui-layout-west ui-layout-resizer-west-closed">
+                <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
                     <li><a href="student_info.html"><span class="min-i-arrow"></span>學生資訊</a></li>
                     <li><a href="exchange_point.html"><span class="min-i-arrow"></span>點數兌換</a></li>
                     <li><a href="student_point_history.html"><span class="min-i-arrow"></span>歷史紀錄</a></li>
                     <li><a href="forgot_password.html"><span class="min-i-arrow"></span>更改密碼</a></li>
-                    <li><a href="獎勵申請_同意書.html"><span class="min-i-arrow"></span>申請獎勵</a></li>
+                    <li><a href="apply_reward_consent.html"><span class="min-i-arrow"></span>申請獎勵</a></li>
                     <li><a href="forgot_metamask.html"><span class="min-i-arrow"></span>更換MetaMask地址</a></li>
                 </ul>
             </div>
         </div>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                學生資訊
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
+                    <li><a class="dropdown-item" href="student_info.html"><span class="min-i-arrow"></span>學生資訊</a></li>
+                    <li><a class="dropdown-item" href="exchange_point.html"><span class="min-i-arrow"></span>點數兌換</a></li>
+                    <li><a class="dropdown-item" href="student_point_history.html"><span class="min-i-arrow"></span>歷史紀錄</a></li>
+                    <li><a class="dropdown-item" href="forgot_password.html"><span class="min-i-arrow"></span>更改密碼</a></li>
+                    <li><a class="dropdown-item" href="apply_reward_consent.html"><span class="min-i-arrow"></span>申請獎勵</a></li>
+                    <li><a class="dropdown-item" href="forgot_metamask.html"><span class="min-i-arrow"></span>更換MetaMask地址</a></li>
+                </ul>
+            </ul>
+        </div>
         <div class="rightDiv">
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="student_info.html">首頁</a></li>
+                    <li class="breadcrumb-item"><a href="../index.html">首頁</a></li>
                     <li class="breadcrumb-item active" aria-current="page">點數兌換</li>
                 </ol>
             </nav>

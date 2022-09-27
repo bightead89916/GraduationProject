@@ -10,7 +10,7 @@ if(isset($_GET['page'])){
 
 //連線資料庫
 try{
-    $pdo = new PDO('mysql:host=localhost:3307;dbname=graduation_project',"root","466110");
+    $pdo = new PDO('mysql:host=localhost:3306;dbname=1',"root","");
     echo "成功連線";
 }catch (PDOException $e){
     echo $e->getMessage();

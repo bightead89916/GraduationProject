@@ -1,3 +1,28 @@
+<?php
+session_start();
+
+if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == true){
+    $id = $_SESSION['login_id'];
+}else{
+    header('Location: ../login.php?msg=請再次登入');
+}
+
+$pdo = null;
+//連線資料庫，取出全部資料，後面用if篩選
+require_once('../connectDB.php');
+$pdo = connectDB();
+//學生資訊
+try{
+    $sql = "SELECT * FROM `student` WHERE `sId`='{$id}';";
+    $user_array = $pdo->query($sql);
+
+    $user = $user_array->fetch();
+}catch (PDOException $e){
+    echo $e->getMessage();
+}
+//關閉資料庫連線
+$pdo = null;
+?>
 <!doctype html>
 <html lang="en">
 
@@ -64,15 +89,19 @@
         td,
         th {
             padding: 5px;
+            text-align: center;
         }
         
         .rightDiv table td {
             font-size: large;
             font-family: verdana;
+            border: 1px solid #290023;
         }
         
         .rightDiv table th {
             font-size: large;
+            border: 1px solid #290023;
+            background: rgb(235, 234, 234);
         }
         
         .rightDiv table thead {
@@ -113,16 +142,14 @@
                     </ul>
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="portal_login_button">B10856056 羅文佑</a>
+                        <a class="nav-link" href="#" id="portal_login_button"><?php echo $user['sId'].' '.$user['sName'] ?></a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
-    <!--
-    要有的功能；修改密碼，修改MetaMask地址，展示有的點數，展示買過的獎品
--->
+
     <div class="container">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -165,7 +192,7 @@
         </div>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                學生資訊
+                歷史紀錄
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
@@ -182,55 +209,104 @@
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../index.html">首頁</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">學生資訊</li>
+                    <li class="breadcrumb-item active" aria-current="page">歷史紀錄</li>
                 </ol>
             </nav>
             <!--js輸出table-->
             <div class="rightTable">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>B10856056</th>
-                            <td>羅文佑</td>
-                        </tr>
-                    </thead>
                     <tbody>
-
                         <tr>
-                            <th>目前持有點數:</th>
-                            <td>1000</td>
-                        </tr>
-                        <tr>
-                            <th>嘉獎:</th>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <th>小功:</th>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <th>大功:</th>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <th>警告:</th>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <th>小過:</th>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <th>大過:</th>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <th>錢包地址:</th>
-                            <td>0xCa3FCcc97de2478B74b37166BA9c10185AC384B8</td>
+                            <th>學號:</th>
+                            <td>B10856056</td>
+                            <th>姓名:</th>
+                            <td>羅文佑</td>
+                            <th>查詢項目:</th>
+                            <td class="select">
+                                <select class="form-select" name="searchSelect" id="searchSelect">
+                                    <option selected value="1">獎品兌換紀錄</option>
+                                    <option value="2">獎品使用紀錄</option>
+                                    <option value="3">獎懲紀錄</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="button" name="searchBtn" id="searchBtn" value="查詢" onclick="search()">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <br>
+            <div class="resultTable" name="resultTable" id="resultTable">
+                <table class="result" name="exportTable" id="exportTable">
+                        <!--按下查詢後輸出資料-->
+                        <script>
+                            
+                            function search(){
+                                var select = document.getElementById("searchSelect"); //定義select，方便之後取值
+                                var option = select.options[select.selectedIndex].value; //將option的值存起來
+                                $.ajax({
+                                url: '../jump/student_point_history_send.php',
+                                method: 'POST',               
+                                dataType: 'json',             
+                                data: {"act": "postsomething",
+                                    "option": option},    
+                                success: function(res){//取得資料的json檔，輸出成表格
+                                    if(option==1){//獎品兌換紀錄
+                                        var rescount = Object.keys(res).length;//資料個數
+                                        document.getElementById("exportTable").innerHTML = "";
+                                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">時間</th><th scope="col">處室</th><th scope="col">獎品名稱</th><th scope="col">單價</th><th scope="col">數量</th><th scope="col">點數變化</th></tr>';
+                                        for(var i=0;i<rescount;i++){
+                                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].transactionTime + '</td><td>' + res[i].oName + '</td><td>' + res[i].pName + '</td><td>' + res[i].price + '</td><td>' + res[i].amount + '</td><td>' + res[i].point + '</td></tr>';
+                                        }
+                                    }
+                                    else if(option==2){
+                                        var rescount = Object.keys(res).length;//資料個數
+                                        document.getElementById("exportTable").innerHTML = "";
+                                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">使用時間</th><th scope="col">處室</th><th scope="col">獎品名稱</th><th scope="col">數量</th></tr>';
+                                        for(var i=0;i<rescount;i++){
+                                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].transactionTime + '</td><td>' + res[i].oName + '</td><td>' + res[i].pName + '</td><td>' + res[i].amount +'</td></tr>';
+                                        }
+                                        console.log(res)
+                                    }
+                                    else if(option==3){
+                                        var rescount = Object.keys(res).length;//資料個數
+                                        document.getElementById("exportTable").innerHTML = "";
+                                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">時間</th><th scope="col">嘉獎</th><th scope="col">小功</th><th scope="col">大功</th><th scope="col">警告</th><th scope="col">小過</th><th scope="col">大過</th><th scope="col">點數變化</th><th scope="col">事由</th></tr>';
+                                        for(var i=0;i<rescount;i++){
+                                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].updateTime + '</td><td>' + res[i].Commendation + '</td><td>' + res[i].MinorMerit + '</td><td>' + res[i].MajorMerit + '</td><td>' + res[i].Admonition + '</td><td>' + res[i].MinorDemerit +'</td><td>' + res[i].MajorDemerit +'</td><td>' + res[i].point +'</td><td>' + res[i].reason +'</td></tr>';
+                                        }
+                                    }
+                                },
+                                error: function (request, status, error) {
+                                console.log(request.responseText);
+                                }});
+                                return false; 
+                            }
+                            // function search123() {
+                            //     var select = document.getElementById("searchSelect"); //定義select，方便之後取值
+                            //     var option = select.options[select.selectedIndex].value; //將option的值存起來
+                            //     if(option=1){
+                            //         document.getElementById("exportTable").innerHTML = ""; //清空div
 
+                            //         var prizelogscount = "";
+                            //         var rewardslogscount = "";
+                                    
+                            //         var searchSelect;
+                            //         var pid = 1;
+                            //         for (i = 0; i < pid; i++) {
+                            //             var time = "123";
+                            //             var oName = "教務處";
+                            //             var pName = "成績單手續費";
+                            //             var price = "10";
+                            //             var amount = "10";
+                            //             var point = "-100";
+                            //             document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">時間</th><th scope="col">處室</th><th scope="col">獎品名稱</th><th scope="col">單價</th><th scope="col">數量</th><th scope="col">點數變化</th></tr><tr><td>' + time + '</td><td>' + oName + '</td><td>' + pName + '</td><td>' + price + '</td><td>' + amount + '</td><td>' + point + '</td></tr></table>';
+                            //     }
+                            //     }
+                            // }
+                        </script>
+                </table>
             </div>
         </div>
     </div>

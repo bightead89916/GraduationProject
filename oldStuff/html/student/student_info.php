@@ -1,3 +1,7 @@
+<?php
+//登入驗證
+$sId='B10856056';
+?>
 <!doctype html>
 <html lang="en">
 
@@ -101,13 +105,6 @@
         }
     </style>
 </head>
-<!--
-    上方select table td放按鈕
-    下方顯示結果
-    1.點數兌換紀錄
-    2.獎品兌換紀錄
-    3.
--->
 
 <body>
     <div class="container">
@@ -176,7 +173,7 @@
         </div>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                歷史紀錄
+                學生資訊
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
@@ -193,55 +190,43 @@
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../index.html">首頁</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">歷史紀錄</li>
+                    <li class="breadcrumb-item active" aria-current="page">學生資訊</li>
                 </ol>
             </nav>
             <!--js輸出table-->
+            <!--sql搜尋-->
+            <?php
+            include("../connect.php");
+            $sId='B10856056';
+            
+            $search_point = $pdo->prepare("SELECT `point` FROM `student` WHERE `sId` = '$sId'");//查出持有點數
+            $search_point->execute();
+            $point = $search_point->fetch(PDO::FETCH_ASSOC);
+            
+            $pdo = null;
+            ?>
+            <!--sql搜尋結束-->
             <div class="rightTable">
+                <h3>B10856056 羅文佑</h3>
+                <h3>目前持有點數:<?php echo $point['point'] ?></h3>
                 <table>
-                    <tbody>
-                        <tr>
-                            <th>學號:</th>
-                            <td>B10856056</td>
-                            <th>姓名:</th>
-                            <td>羅文佑</td>
-                            <th>查詢項目:</th>
-                            <td class="select">
-                                <select class="form-select" name="searchSelect" id="searchSelect">
-                                    <option selected value="1">獎品兌換紀錄</option>
-                                    <option value="2">點數兌換紀錄</option>
-                                    <option value="3">獎品使用紀錄</option>
-                                    <option value="4">獎懲紀錄</option>
-                                    </select>
-                            </td>
-                            <td>
-                                <input type="submit" name="searchBtn" id="searchBtn" value="查詢" onclick="search()">
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                    <th scope="col">持有的獎品</th>
+                    <td>數量</td>
+                    <td>詳情</td>
+                    <td>使用</td>
+                    <td>最後取得時間</td>
+                    </tr>
+                    <tr>
+                    <th scope="col">健身房折價券</th>
+                    <td>10</td>
+                    <td>詳情url</td>
+                    <td>使用url</td>
+                    <td>2022-06-03 19:44:02</td>
+                    </tr>
                 </table>
-            </div>
-            <br>
-            <div class="resultTable" name="resultTable" id="resultTable">
-                <table class="result" name="exportTable" id="exportTable">
-                    <!--按下查詢後輸出資料-->
-                    <script>
-                        function search() {
-                            document.getElementById("exportTable").innerHTML = ""; //清空div
-                            var searchSelect;
-                            var pid = 1;
-                            for (i = 0; i < pid; i++) {
-                                var time = "2022-06-03 19:44:02";
-                                var oName = "教務處";
-                                var pName = "成績單手續費";
-                                var price = "10";
-                                var amount = "10";
-                                var point = "-100";
-                                document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">時間</th><th scope="col">處室</th><th scope="col">獎品名稱</th><th scope="col">單價</th><th scope="col">數量</th><th scope="col">點數變化</th></tr><tr><td>' + time + '</td><td>' + oName + '</td><td>' + pName + '</td><td>' + price + '</td><td>' + amount + '</td><td>' + point + '</td></tr></table>';
-                            }
-                        }
-                    </script>
-                </table>
+                
+
             </div>
         </div>
     </div>
@@ -249,3 +234,6 @@
 </body>
 
 </html>
+<?php
+$pdo = null;
+?>

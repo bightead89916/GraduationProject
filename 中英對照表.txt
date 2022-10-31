@@ -1,10 +1,39 @@
+
+--jump--
+deleteCom                  刪除商品
+loginCheck                 確認帳密
+logout                     進行登出
+prize_upload_send          新增商品至資料庫
+sendBuy                    購買商品
+sendExchange               兌換點數(可能刪除)
+student_point_history_send 查詢歷史紀錄
+
+--office--
+confirm               確認學生購買(可能刪除)
 give_reward_down      成功給予獎懲
-index                 校方頁面
-prize_upload          商品上架頁面
-prize_detail          商品頁面
 give_reward_form      給予獎懲
+give_reward_form      獎懲介面
+office_info           教師資訊
+student_register      學生註冊
+prize_upload          商品上架
+
+--student--
+student_info          學生資訊
 apply_reward_consent  獎勵申請_同意書
 apply_reward_form     獎勵申請_填寫表單
-give_reward_form      獎懲介面
 give_reward_consent   獎懲申請書
-student_register      學生註冊
+student_point_history 查詢歷史紀錄
+exchange_point        兌換點數(已刪除)
+
+--共同--
+connectDB             連接資料庫
+index                 首頁
+login                 登入
+prize_info            商品資訊
+
+--資料夾--
+jump                  跳轉頁面
+office                管理員頁面
+student               學生頁面
+
+----------------------------------------------------

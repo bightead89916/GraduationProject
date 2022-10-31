@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <title>獎懲介面</title>
+    <script src="js.js"></script>
+    <style type="text/css">
+        .navbar {
+            background-color: white;
+        }
+        
+        .main-footer {
+            background-color: rgb(150, 150, 150);
+        }
+        
+        .carousel {
+            margin-bottom: 10px;
+        }
+        
+        table tr:hover {
+            /*hover=滑鼠指到*/
+            background-color: rgba(238, 255, 0, 0.884);
+        }
+        
+        img {
+            width: 100px;
+            max-width: 100%;
+            /*不使用width:100% 是因避免圖片解析度不好，隨父元素被放大時會糊掉*/
+            height: auto;
+        }
+        
+        table img:hover {
+            /*指到圖片放大*/
+            width: 500px;
+            height: auto;
+        }
+        
+        .td_content {
+            /*讓td不會太寬*/
+            width: 500px;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="校方頁面.html">
+                    <img src="https://cop.npust.edu.tw/wp-content/uploads/2021/04/NPUSTLogo.svg-1024x564.png" alt="" width="45" height="24" class="d-inline-block align-text-top"> 屏科大學生獎勵兌換系統
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link" href="給予獎懲.html">給予獎懲</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <!--顯示申請書table-->
+            <div class="table-outdiv">
+                <h2 class="ptest">獎勵申請書</h2>
+                <div class="row justify-content-around">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    <label class="control control--checkbox">
+                                    <input type="checkbox" class="js-check-all">
+                                    <div class="control__indicator"></div></label>
+                                </th>
+                                <th scope="col">申請人</th>
+                                <th scope="col">學號</th>
+                                <th scope="col">申請獎項</th>
+                                <th scope="col">申請原因</th>
+                                <th scope="col">證明照片</th>
+                                <th scope="col">證明獲得單位</th>
+                                <th scope="col">申請時間</th>
+                                <!--參考點名，有OO 複製 XX的icon能勾選-->
+                                <th scope="col">通過</th>
+                                <th scope="col">否決</th>
+                                <!--準備單個送出跟全部送出?-->
+                                <th scope="col"><a href="#">將打勾的全部送出</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <label class="control control--checkbox">
+                                    <input type="checkbox" class="js-check-all">
+                                    <div class="control__indicator"></div></label>
+                                </th>
+                                <td>羅文佑</td>
+                                <td>B10856056</td>
+                                <td>大功*1</td>
+                                <td class="td_content">得了2021年諾貝爾和平獎Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam amet minus autem. Aliquam corrupti tenetur fuga repellendus temporibus doloribus, veritatis ipsa, beatae perferendis ratione nulla reiciendis? Nam
+                                    inventore doloribus iLorem ipsum dolor sit amet consectetur adipisicing elit. Nam amet minus autem. Aliquam corrupti tenetur fuga repellendus temporibus doloribus, veritatis ipsa, beatae perferendis ratione nulla reiciendis?
+                                    Nam inventore doloribus id.</td>
+                                <td><a href="諾貝爾獎.jpg"><img src="諾貝爾獎.jpg" class="small_img" alt="..."></a></td>
+                                    <td>挪威議會</td>
+                                    <td>2022/01/01 19:51:40</td>
+                                    <td>
+                                        <div class="radio">
+                                            <label><input type="radio" value="radio1" name="grp1" /></label></td>
+                                    <td><label><input type="radio" value="radio2" name="grp1" checked/></label>
+                                        </div>
+                                    </td>
+                                    <td><a href="#">送出</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <label class="control control--checkbox">
+                                    <input type="checkbox" class="js-check-all">
+                                    <div class="control__indicator"></div></label>
+                                </th>
+                                <td>羅文佑</td>
+                                <td>B10856056</td>
+                                <td>大功*1</td>
+                                <td class="td_content">得了2021年諾貝爾和平獎</td>
+                                <td>
+                                    <a href="諾貝爾獎.jpg"><img src="諾貝爾獎.jpg" class="small_img" alt="..."></a>
+                                </td>
+                                <td>挪威議會</td>
+                                <td>2022/01/01 19:51:40</td>
+                                <td>O</td>
+                                <td>X</td>
+                                <td><a href="#">送出</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <label class="control control--checkbox">
+                                    <input type="checkbox" class="js-check-all">
+                                    <div class="control__indicator"></div></label>
+                                </th>
+                                <td>羅文佑</td>
+                                <td>B10856056</td>
+                                <td>大功*1</td>
+                                <td class="td_content">得了2021年諾貝爾和平獎</td>
+                                <td>
+                                    <a href="諾貝爾獎.jpg"><img src="諾貝爾獎.jpg" class="small_img" alt="..."></a>
+                                </td>
+                                <td>挪威議會</td>
+                                <td>2022/01/01 19:51:40</td>
+                                <td>✅</td>
+                                <!--按下去後變成勾勾、叉叉-->
+                                <td>❌</td>
+                                <td><a href="#">送出</a></td>
+                            </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+            <nav aria-label="...">
+                <ul class="pagination pagination-sm justify-content-center">
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">1</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>

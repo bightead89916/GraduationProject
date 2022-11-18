@@ -90,7 +90,7 @@
       <polyline fill="none" stroke="#68E534" stroke-width="24" points="88,214 173,284 304,138" stroke-linecap="round" stroke-linejoin="round" class="tick" class="tick "/>
     </svg>
 
-    <h2>成功上傳!</h2>
+    <h2>成功購買!</h2>
     <script>
         setTimeout("location.href='office_info.php'", 4000); // 4秒後跳轉頁面
     </script>

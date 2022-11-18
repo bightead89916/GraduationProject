@@ -26,13 +26,18 @@ if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
             $search_oName = $pdo->prepare("SELECT `oName` FROM `office` WHERE `oId` = '$oId'");
             $search_oName->execute();
             $oName = $search_oName->fetch(PDO::FETCH_ASSOC);
+
+            $pId = $row['pId']; //查出pName
+            $search_pName = $pdo->prepare("SELECT `pName` FROM `prize` WHERE `pId` = '$pId'");
+            $search_pName->execute();
+            $pName = $search_pName->fetch(PDO::FETCH_ASSOC);
             
             $userData[]=array(
             'pId'=>$row['pId'],
             'sId'=>$row['sId'],
             'amount'=>$row['amount'],
             'price'=>$row['price'],
-            'pName'=>$row['pName'],
+            'pName'=>$pName['pName'],
             'oName'=>$oName['oName'],
             'point'=>$row['point'],
             'transactionTime'=>$row['transactionTime']

@@ -116,7 +116,7 @@ $sId=$id;
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="../index.html">
+                <a class="navbar-brand" href="../index.php">
                     <img src="https://cop.npust.edu.tw/wp-content/uploads/2021/04/NPUSTLogo.svg-1024x564.png" alt="" width="45" height="24" class="d-inline-block align-text-top"> 屏科大學生獎勵兌換系統
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +127,7 @@ $sId=$id;
                     </ul>
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="portal_login_button">B10856056 羅文佑</a>
+                            <a class="nav-link" href="../jump/logout.php" id="portal_login_button">登出</a>
                         </li>
                     </ul>
                 </div>
@@ -138,7 +138,7 @@ $sId=$id;
     要有的功能；修改密碼，修改MetaMask地址，展示有的點數，展示買過的獎品
 -->
     <div class="container">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -163,17 +163,15 @@ $sId=$id;
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
-        </div>
+        </div> -->
         <!--左邊的清單-->
         <div class="leftNav" id="leftNav">
             <div class="ui-layout-west ui-layout-resizer-west-closed">
                 <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
-                    <li><a href="student_info.html"><span class="min-i-arrow"></span>學生資訊</a></li>
-                    <li><a href="exchange_point.html"><span class="min-i-arrow"></span>點數兌換</a></li>
-                    <li><a href="student_point_history.html"><span class="min-i-arrow"></span>歷史紀錄</a></li>
-                    <li><a href="forgot_password.html"><span class="min-i-arrow"></span>更改密碼</a></li>
-                    <li><a href="apply_reward_consent.html"><span class="min-i-arrow"></span>申請獎勵</a></li>
-                    <li><a href="forgot_metamask.html"><span class="min-i-arrow"></span>更換MetaMask地址</a></li>
+                    <li><a href="student_info.php"><span class="min-i-arrow"></span>學生資訊</a></li>
+                    <li><a href="student_point_history.php"><span class="min-i-arrow"></span>歷史紀錄</a></li>
+                    <li><a href="forgot_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
+                    <!-- <li><a href="apply_reward_consent.php"><span class="min-i-arrow"></span>申請獎勵</a></li> -->
                 </ul>
             </div>
         </div>
@@ -183,12 +181,10 @@ $sId=$id;
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
-                    <li><a class="dropdown-item" href="student_info.html"><span class="min-i-arrow"></span>學生資訊</a></li>
-                    <li><a class="dropdown-item" href="exchange_point.html"><span class="min-i-arrow"></span>點數兌換</a></li>
-                    <li><a class="dropdown-item" href="student_point_history.html"><span class="min-i-arrow"></span>歷史紀錄</a></li>
-                    <li><a class="dropdown-item" href="forgot_password.html"><span class="min-i-arrow"></span>更改密碼</a></li>
-                    <li><a class="dropdown-item" href="apply_reward_consent.html"><span class="min-i-arrow"></span>申請獎勵</a></li>
-                    <li><a class="dropdown-item" href="forgot_metamask.html"><span class="min-i-arrow"></span>更換MetaMask地址</a></li>
+                    <li><a class="dropdown-item" href="student_info.php"><span class="min-i-arrow"></span>學生資訊</a></li>
+                    <li><a class="dropdown-item" href="student_point_history.php"><span class="min-i-arrow"></span>歷史紀錄</a></li>
+                    <li><a class="dropdown-item" href="forgot_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
+                    <!-- <li><a class="dropdown-item" href="apply_reward_consent.php"><span class="min-i-arrow"></span>申請獎勵</a></li> -->
                 </ul>
             </ul>
         </div>
@@ -206,7 +202,8 @@ $sId=$id;
             //查學號姓名
             $search_sName = $pdo->prepare("SELECT `sName` FROM `student` WHERE `sId` = '$sId'");
             $search_sName->execute();
-            $sName = $search_sName->fetch(PDO::FETCH_ASSOC);
+            $sNamefetch = $search_sName->fetch(PDO::FETCH_ASSOC);
+            $sName = $sNamefetch['sName'];
             
             //查出持有點數
             $search_point = $pdo->prepare("SELECT `point` FROM `student` WHERE `sId` = '$sId'");
@@ -225,10 +222,12 @@ $sId=$id;
                 $pName = $search_pName->fetch(PDO::FETCH_ASSOC);
                 
                 $userData[]=array(
+                'id'=>$row['id'],
                 'amount'=>$row['amount'],
                 'pName'=>$pName['pName'],
                 'updateTime'=>$row['updateTime'],
-                'pId'=>$row['pId']
+                'pId'=>$row['pId'],
+                'sId'=>$row['sId']
                 );
             }
             $count = count($userData);//資料筆數
@@ -237,7 +236,7 @@ $sId=$id;
             ?>
             <!--sql搜尋結束-->
             <div class="rightTable">
-                <h3><?php echo $sId; echo $sName['sName'];?></h3>
+                <h3><?php echo $sId; echo $sName;?></h3>
                 <h3>目前持有點數:<?php echo $point['point'] ?></h3>
                 <table name="exportTable" id="exportTable">
                     <!--js輸出table-->
@@ -245,11 +244,12 @@ $sId=$id;
                         //在這輸出學生持有的獎品資料
                         var count = <?php echo $count ?>;//資料個數
                         var res = <?php echo $res?>;//結果的json
+                        var sName = "<?php echo $sName?>";
                     
                         document.getElementById("exportTable").innerHTML = "";
                         document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">持有的獎品</th><th scope="col">數量</th><th scope="col">詳情</th><th scope="col">使用</th><th scope="col">最後取得時間</th></tr>';
                         for(var i=0;i<count;i++){
-                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].amount + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td>' + "使用url" + '</td><td>' + res[i].updateTime + '</td></tr>';
+                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].amount + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td><a class="btn btn-primary" href="../jump/QRcode.php?id=' + res[i].id+ '&pId='+ res[i].pId + '&pName='+ res[i].pName + '&sName='+ sName +'">使用QRcode</a></td><td>' + res[i].updateTime + '</td></tr>';
                         }
                     </script>
                 </table>

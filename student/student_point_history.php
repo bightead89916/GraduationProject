@@ -131,7 +131,7 @@ $pdo = null;
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="../index.html">
+                <a class="navbar-brand" href="../index.php">
                     <img src="https://cop.npust.edu.tw/wp-content/uploads/2021/04/NPUSTLogo.svg-1024x564.png" alt="" width="45" height="24" class="d-inline-block align-text-top"> 屏科大學生獎勵兌換系統
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,7 +151,7 @@ $pdo = null;
     </div>
 
     <div class="container">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -176,17 +176,15 @@ $pdo = null;
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
-        </div>
+        </div> -->
         <!--左邊的清單-->
         <div class="leftNav" id="leftNav">
             <div class="ui-layout-west ui-layout-resizer-west-closed">
                 <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
-                    <li><a href="student_info.html"><span class="min-i-arrow"></span>學生資訊</a></li>
-                    <li><a href="exchange_point.html"><span class="min-i-arrow"></span>點數兌換</a></li>
-                    <li><a href="student_point_history.html"><span class="min-i-arrow"></span>歷史紀錄</a></li>
-                    <li><a href="forgot_password.html"><span class="min-i-arrow"></span>更改密碼</a></li>
-                    <li><a href="apply_reward_consent.html"><span class="min-i-arrow"></span>申請獎勵</a></li>
-                    <li><a href="forgot_metamask.html"><span class="min-i-arrow"></span>更換MetaMask地址</a></li>
+                    <li><a href="student_info.php"><span class="min-i-arrow"></span>學生資訊</a></li>
+                    <li><a href="student_point_history.php"><span class="min-i-arrow"></span>歷史紀錄</a></li>
+                    <li><a href="forgot_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
+                    <!-- <li><a href="apply_reward_consent.php"><span class="min-i-arrow"></span>申請獎勵</a></li> -->
                 </ul>
             </div>
         </div>
@@ -196,12 +194,10 @@ $pdo = null;
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
-                    <li><a class="dropdown-item" href="student_info.html"><span class="min-i-arrow"></span>學生資訊</a></li>
-                    <li><a class="dropdown-item" href="exchange_point.html"><span class="min-i-arrow"></span>點數兌換</a></li>
-                    <li><a class="dropdown-item" href="student_point_history.html"><span class="min-i-arrow"></span>歷史紀錄</a></li>
-                    <li><a class="dropdown-item" href="forgot_password.html"><span class="min-i-arrow"></span>更改密碼</a></li>
-                    <li><a class="dropdown-item" href="apply_reward_consent.html"><span class="min-i-arrow"></span>申請獎勵</a></li>
-                    <li><a class="dropdown-item" href="forgot_metamask.html"><span class="min-i-arrow"></span>更換MetaMask地址</a></li>
+                    <li><a class="dropdown-item" href="student_info.php"><span class="min-i-arrow"></span>學生資訊</a></li>
+                    <li><a class="dropdown-item" href="student_point_history.php"><span class="min-i-arrow"></span>歷史紀錄</a></li>
+                    <li><a class="dropdown-item" href="forgot_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
+                    <!-- <li><a class="dropdown-item" href="apply_reward_consent.php"><span class="min-i-arrow"></span>申請獎勵</a></li> -->
                 </ul>
             </ul>
         </div>

@@ -69,7 +69,7 @@
             商品上架
         </h1>
         <!-- <div class="col-12 col-md-8 col-lg-8"> -->
-        <form action="../jump/prize_upload_send.php" method="POST" enctype="multipart/form-data">
+        <form action="../jump/prize_upload_send.php" method="POST" enctype="multipart/form-data" id="form">
             <div class="mb-3">
                 <label class="form-label">商品照片：</label>
                 <input class="form-control" type="file" multiple placeholder="請上傳商品照片" name="picture" required>

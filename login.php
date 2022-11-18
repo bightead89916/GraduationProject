@@ -94,7 +94,7 @@ if(isset($_GET['msg'])){
             </div>
         </nav>
     </div>
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -119,7 +119,7 @@ if(isset($_GET['msg'])){
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
-    </div>
+    </div> -->
     <!--登入，form表單post資料，action放網址可以連首頁-->
     <div class="content-login-sub">
         <form action="jump/loginCheck.php" method="post" id="login">

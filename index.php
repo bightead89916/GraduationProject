@@ -28,6 +28,7 @@ try{//取得商品資訊
     echo $e->getMessage();
 }
 
+
 //關閉連接
 $pdo = null;
 ?>
@@ -85,16 +86,7 @@ $pdo = null;
                         <li class="nav-item">
                             <a class="nav-link" href="office/office_info.php">個人資訊(Office)</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="office/confirm.php">待確認單</a>
-                        </li>
                         <?php else:?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="student/apply_reward_consent.html">獎勵申請</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">持有兌換券</a>
-                        </li>
                         <li class="nav-item">
                         <a class="nav-link" href="student/student_info.php">個人資訊(Student)</a>
                         </li>
@@ -116,7 +108,7 @@ $pdo = null;
 
     </div>
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -141,7 +133,7 @@ $pdo = null;
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
-    </div>
+    </div> -->
 
     <!-- <div class="container">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -160,7 +152,7 @@ $pdo = null;
                     <?php if( $page*6 <= $i && $i < ($page+1)*6 ) : ?>
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="card" style="width: 18rem;">
-                            <img src="<?php echo $commodity['pictureAddress'] ?>" class="card-img-top" alt="...">
+                            <img src="jump/<?php echo $commodity['pictureAddress'] ?>" class="card-img-top" alt="...">
                             <div class="card-body" method="post">
                                 <h5 class="card-title"><?php echo $commodity['pName'] ?></h5>
                                 <p class="card-text"><?php echo $commodity['content'] ?></p>
@@ -202,9 +194,7 @@ $pdo = null;
         </div>
     </div>
 
-    <div class="container-fluid main-footer text-center">
-        &copy; copyringht by Shantelle
-    </div>
+
 
 
 

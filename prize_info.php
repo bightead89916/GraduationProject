@@ -26,9 +26,14 @@ try{//取得商品資訊
     $sql = "SELECT * FROM `prizelogs` WHERE `pId`={$id};";
     $resume = $pdo->query($sql);
     $count = $resume->rowCount();
+    $historysell = 0;//商品總共賣出的次數
     if($count == ""){
         $count = 0;
     }
+    while($row = $resume->fetch(PDO::FETCH_ASSOC)){ //搜尋所有prizelog裡的amount，加起來
+        $historysell = $historysell+$row['amount'];
+    }
+    $count=$historysell;
 }catch (PDOException $e){
     echo $e->getMessage();
 }
@@ -79,7 +84,7 @@ $pdo = null;
                 <?php if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE):?>
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php" id="portal_login_button">登出</a>
+                            <a class="nav-link" href="jump/logout.php" id="portal_login_button">登出</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
@@ -94,12 +99,6 @@ $pdo = null;
                             <a class="nav-link" href="confirm.php">待確認單</a>
                         </li>
                         <?php else:?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="apply_reward_consent.html">獎勵申請</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">持有兌換券</a>
-                        </li>
                         <li class="nav-item">
                         <a class="nav-link" href="student/student_info.php">個人資訊(Student)</a>
                         </li>
@@ -122,7 +121,7 @@ $pdo = null;
             <div class="row">
                 <div class="col-12 col-md-5">
 
-                    <img src="<?php echo $commodity['pictureAddress']?>"
+                    <img src="jump/<?php echo $commodity['pictureAddress']?>"
                         class="img-thumbnail" 
                         alt="<?php echo $commodity['pName'] ?>">
                 </div>
@@ -135,17 +134,24 @@ $pdo = null;
                     <h5>商品描述：<br><?php echo $commodity['content']?></h5>
                     <br><br><br><br><br><br>
                     <div class="d-grid gap-2 col-6 mx-auto">
-                        <button class="btn btn-primary" type="button" onClick="location.href='sendBuy.php?id=<?php echo $commodity['pId']?>'">兌換</button>
+                    <form action="jump/sendBuy.php?pId=<?php echo $commodity['pId']?>" method="POST" enctype="multipart/form-data" id="form">
+                        <select class="form-select form-select-lg mb-3" id="amount" name="amount" aria-label="Default select example" required="required">
+                        <option selected value="">購買數量</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        </select>
+                        <input type="submit" class="btn btn-primary" value="確定送出">
+                    </from>
                     </div>
+
                 </div>
             </div>
         </div>
 
 
 
-        <div class="container-fluid main-footer text-center">
-            &copy; copyringht by Shantelle
-        </div>
+
 
 
         <!-- Optional JavaScript; choose one of the two! -->

@@ -223,34 +223,25 @@ $pdo = null;
             <!--js輸出table-->
             <h3><?php echo $oName?>目前上架的獎品</h3>
             <div class="rightTable">
-            <!--<table><tr><th scope="col">獎品名稱</th><th scope="col">描述</th><th scope="col">存量</th><th scope="col">價格</th><th scope="col">到期日</th><th scope="col">修改</th></tr></table>
-            -->
             <!--sql搜尋-->
             <?php
             require_once('../connectDB.php');
             $pdo = connectDB();
             //查office發行過什麼獎品，存成array
-            try{
                 $sql = "SELECT * FROM `prize` WHERE `oId` = '$oId'";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute();
                 $userData=array();
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-
                     $userData[]=array(
                     'pName'=>$row['pName'],
-                    'amount'=>$row['amount'],
+                    'stock'=>$row['stock'],
                     'pId'=>$row['pId'],
                     'updateTime'=>$row['updateTime'],
-
-
+                    'expiryDate'=>$row['expiryDate'],
                     );
                 }
-
-            }catch (PDOException $e){
-                echo $e->getMessage();
-            }
-
+            $count = count($userData);//資料筆數
             $res = json_encode($userData,JSON_UNESCAPED_UNICODE);
             $pdo = null;
             ?>
@@ -261,9 +252,9 @@ $pdo = null;
                 var res = <?php echo $res?>;//結果的json
                     
                 document.getElementById("exportTable").innerHTML = "";
-                document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">持有的獎品</th><th scope="col">數量</th><th scope="col">詳情</th><th scope="col">使用</th><th scope="col">最後取得時間</th></tr>';
+                document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">上架的獎品</th><th scope="col">存量</th><th scope="col">詳情</th><th scope="col">下架</th><th scope="col">上架時間</th><th scope="col">到期日</th></tr>';
                 for(var i=0;i<count;i++){
-                    document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].amount + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td><a class="btn btn-primary" href="../jump/QRcode.php?id=' + res[i].id+ '&pId='+ res[i].pId + '&sId='+ res[i].sId+'">使用QRcode</a></td><td>' + res[i].updateTime + '</td></tr>';
+                    document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].stock + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td><a class="btn btn-danger" href="../jump/QRcode.php">下架</a></td><td>' + res[i].updateTime + '</td><td>' + res[i].expiryDate + '</td></tr></table>';
                 }
             </script>
             </table>

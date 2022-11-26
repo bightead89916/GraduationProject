@@ -251,7 +251,7 @@ $pdo = null;
                                     if(option==1){//獎品兌換紀錄
                                         var rescount = Object.keys(res).length;//資料個數
                                         document.getElementById("exportTable").innerHTML = "";
-                                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">時間</th><th scope="col">處室</th><th scope="col">獎品名稱</th><th scope="col">單價</th><th scope="col">數量</th><th scope="col">點數變化</th></tr>';
+                                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">時間</th><th scope="col">處室</th><th scope="col">獎品名稱</th><th scope="col">單價</th><th scope="col">數量</th><th scope="col">花費點數</th></tr>';
                                         for(var i=0;i<rescount;i++){
                                             document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].transactionTime + '</td><td>' + res[i].oName + '</td><td>' + res[i].pName + '</td><td>' + res[i].price + '</td><td>' + res[i].amount + '</td><td>' + res[i].point + '</td></tr>';
                                         }

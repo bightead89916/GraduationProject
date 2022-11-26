@@ -26,29 +26,6 @@ if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == true){
 }else{
     header('Location: ../login.php?msg=請再次登入');
 }
-
-$pdo = null;
-//jquery產生QRcode
-
-//連線資料庫
-// require_once('../connectDB.php');
-// $pdo = connectDB();
-
-// try{//取得商品資訊
-//     $sql = "SELECT * FROM `prize` WHERE `pId`={$id};";
-//     $commodity_array = $pdo->query($sql);
-//     $commodity = $commodity_array->fetch();
-//     //取得商品售出數量
-//     $sql = "SELECT * FROM `prizelogs` WHERE `pId`={$id};";
-//     $resume = $pdo->query($sql);
-//     $count = $resume->rowCount();
-//     if($count == ""){
-//         $count = 0;
-//     }
-// }catch (PDOException $e){
-//     echo $e->getMessage();
-// }
-
 //關閉連接
 $pdo = null;
 ?>
@@ -59,7 +36,7 @@ $pdo = null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>qrcode</title>
+    <title>QRcode</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="../jquery-qrcode-0.17.0.min.js"></script>
     <style>
@@ -86,15 +63,31 @@ $pdo = null;
         echo $pName;
         ?>
     </div>
+    <div><p>使用數量:</p></div>
+        <div>
+            <select class="form-select form-select-lg mb-3" id="amount" name="amount" aria-label="Default select example" required="required">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            </select>
+            <input type="button" name="Btn" id="Btn" value="使用" onclick="printQRcode()">
+        </div>
+
         <div id="jquery-qrcode-div"></div>
     </div>
 
     <script>
+        function printQRcode(){
+            var select = document.getElementById("amount"); //定義select，方便之後取值
+            var amount = select.options[select.selectedIndex].value; //將option的值存起來
+
+            document.getElementById("jquery-qrcode-div").innerHTML = "";
+
         $("#jquery-qrcode-div").qrcode({
             render: 'div',
             size: 250,
-            text: 'http://localhost/GraduationProject/jump/usePrize.php?id=<?php echo $id?>&pId=<?php echo $pId?>&sId=<?php echo $sId?>"'
-        });
+            text: 'http://localhost/GraduationProject/jump/QRcodeSend.php?id=<?php echo $id?>&pId=<?php echo $pId?>&amount='+amount+'&sId=<?php echo $sId?>'
+        });}
     </script>
 </body>
 

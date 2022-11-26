@@ -48,16 +48,11 @@
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li> -->
                         <li class="nav-item">
-                            <a class="nav-link" href="prize_upload.php">商品上架</a>
+                            <a class="nav-link" href="office_info.php">個人資訊(office)</a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link disabled">Disabled</a>
                         </li> -->
-                    </ul>
-                    <ul class="nav justify-content-end">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">登入</a>
-                        </li>
                     </ul>
                 </div>
             </div>

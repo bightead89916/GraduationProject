@@ -11,7 +11,7 @@ $pdo = null;
 //連線資料庫
 require_once('../connectDB.php');
 $pdo = connectDB();
-$sId = $_SESSION['login_id'];
+$wAccount = $_SESSION['login_id'];
 
 //if篩選回傳
 if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
@@ -47,7 +47,7 @@ if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
         //在這取出所有需要的值，放入陣列，編輯成json檔，回傳json檔
     }
     else if($option==2){//2=獎品使用紀錄
-        $sql = "SELECT * FROM `uselogs` WHERE `sId` = '$sId'";
+        $sql = "SELECT * FROM `uselogs` ";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $userData=array(); 
@@ -74,20 +74,25 @@ if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
         echo json_encode($userData,JSON_UNESCAPED_UNICODE);
     }
     else if($option==3){//3=獎懲紀錄
-        $sql = "SELECT * FROM `rewardslogs` WHERE `sId` = '$sId'";
+        $sql = "SELECT * FROM `rewardslogs` ";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $userData=array(); 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $wAccount = $row['wAccount']; //查出oName
+        $search_wName = $pdo->prepare("SELECT `wName` FROM `worker` WHERE `wAccount` = '$wAccount'");
+        $search_wName->execute();
+        $wName = $search_wName->fetch(PDO::FETCH_ASSOC);
             $userData[]=array(
+            'sId'=>$row['sId'],
             'Commendation'=>$row['Commendation'],
             'MinorMerit'=>$row['MinorMerit'],
             'MajorMerit'=>$row['MajorMerit'],
             'Admonition'=>$row['Admonition'],
             'MinorDemerit'=>$row['MinorDemerit'],
             'MajorDemerit'=>$row['MajorDemerit'],
-            'point'=>$row['point'],
             'updateTime'=>$row['updateTime'],
+            'wName'=>$wName['wName'],
             'reason'=>$row['reason']
             );
         }

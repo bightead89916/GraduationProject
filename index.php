@@ -15,7 +15,7 @@ $pdo = connectDB();
 
 
 try{//取得商品資訊
-    $sql = "SELECT * FROM `prize`;";
+    $sql = ("SELECT * FROM `prize` WHERE `stock` != 0");
     $commodity_array = $pdo->query($sql);
     $com_count = $commodity_array->rowCount();
     //$page_count = intval($com_count/6);

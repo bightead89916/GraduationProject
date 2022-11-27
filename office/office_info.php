@@ -228,7 +228,7 @@ $pdo = null;
             require_once('../connectDB.php');
             $pdo = connectDB();
             //查office發行過什麼獎品，存成array
-                $sql = "SELECT * FROM `prize` WHERE `oId` = '$oId'";
+                $sql = "SELECT * FROM `prize` WHERE `oId` = '$oId' And `stock` !=0 ";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute();
                 $userData=array();
@@ -254,8 +254,14 @@ $pdo = null;
                 document.getElementById("exportTable").innerHTML = "";
                 document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">上架的獎品</th><th scope="col">存量</th><th scope="col">詳情</th><th scope="col">下架</th><th scope="col">上架時間</th><th scope="col">到期日</th></tr>';
                 for(var i=0;i<count;i++){
-                    document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].stock + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td><a class="btn btn-danger" href="../jump/QRcode.php">下架</a></td><td>' + res[i].updateTime + '</td><td>' + res[i].expiryDate + '</td></tr></table>';
+                    document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].stock + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td><a id="discontinued" onclick="discontinued('+res[i].pId+')" class="btn btn-danger">下架</a></td><td>' + res[i].updateTime + '</td><td>' + res[i].expiryDate + '</td></tr></table>';
                 }
+                function discontinued(e){
+                    var r=confirm("按下按钮");
+                if (r==true){
+                    console.log(e);
+                    window.location.href = "../jump/prize_discontinued.php?pId="+e+"";
+                }}
             </script>
             </table>
             

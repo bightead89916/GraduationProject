@@ -28,19 +28,30 @@ $transactionTime = date("Y-m-d H:i:s");
 $sql = "SELECT COUNT(id) FROM `uselogs`;";
 $res = $pdo->query($sql);
 $id = $res->fetchColumn();
-echo "pId=";
-echo $pId;
-echo "sId=";
-echo $sId;
-echo "amount=";
-echo $amount;
-echo "id=";
-echo $id;
-echo "transactionTime=";
-echo $transactionTime;
-echo "oId=";
-echo $oId;
+// echo "pId=";
+// echo $pId;
+// echo "sId=";
+// echo $sId;
+// echo "amount=";
+// echo $amount;
+// echo "id=";
+// echo $id;
+// echo "transactionTime=";
+// echo $transactionTime;
+// echo "oId=";
+// echo $oId;
 
+    //查學生持有的獎品數量
+    $query=$pdo->prepare("SELECT * FROM student_prize WHERE (sId = :sId AND pId = :pId)");
+        $query->execute(array(
+            ':sId'         => "$sId",
+            ':pId'          => "$pId",
+        ));
+        $student_prize = $query->fetch();
+    $newAmount=$student_prize['amount']-$amount;
+    if($newAmount<0){
+        exit('學生沒有足夠的獎品!');
+    }
 //新增uselogs
 try{
     $stmt = $pdo->prepare("INSERT INTO `uselogs`(`id`, `transactionTime`, `pId`, `sId`, `amount`, `oId`) VALUES (:id, :transactionTime, :pId, :sId, :amount, :oId)");
@@ -54,9 +65,9 @@ try{
         $stmt->execute();
         echo "傳送完畢";
 
-        echo '<script type ="text/JavaScript">';
-        echo 'alert("使用成功，將回到首頁。"); window.location.href = "../index.php";';
-        echo '</script>';
+        // echo '<script type ="text/JavaScript">';
+        //echo 'alert("使用成功，將回到首頁。"); window.location.href = "../index.php";';
+        // echo '</script>';
 }catch (PDOException $e){
     $messege = $e->getMessage();
     $pdo = null;
@@ -66,6 +77,29 @@ try{
 }
 
 //減少student_prize
-//顯示成功訊息
+try{
 
+    $query=$pdo->prepare("UPDATE `student_prize` SET `amount`={$newAmount} WHERE (sId = :sId AND pId = :pId)");
+    $query->execute(array(
+    ':sId'         => "$sId",
+    ':pId'          => "$pId",
+    )
+    );
+        echo "更新完畢";
+
+        // echo '<script type ="text/JavaScript">';
+        // echo 'alert("更新成功，將回到首頁。"); window.location.href = "../index.php";';
+        // echo '</script>';
+}catch (PDOException $e){
+    $messege = $e->getMessage();
+    $pdo = null;
+    echo "alert('{$messege}');";
+    echo '<script type ="text/JavaScript">';
+    echo '</script>';
+}
+//顯示成功訊息
+echo '<script type ="text/JavaScript">';
+echo 'alert("使用成功，將回到首頁。"); window.location.href = "../index.php";';
+echo '</script>';
+$pdo = null;
 ?>

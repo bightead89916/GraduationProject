@@ -113,7 +113,6 @@ try{
     $updatePointSql = "UPDATE student SET point=? WHERE sId=?";
     $stmtUpdate= $pdo->prepare($updatePointSql);
     $stmtUpdate->execute([$point, $sId]);
-    echo "傳送完畢";
 
 }catch (PDOException $e){
         $messege = $e->getMessage();
@@ -123,4 +122,4 @@ try{
 //關閉連接
 $pdo = null;
 ?>
-<a href="successAnimation.php" class="btn btn-primary">確定送出</a>
+<script>setTimeout("location.href='successAnimation.php'"); // 0.1秒後跳轉頁面</script>

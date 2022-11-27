@@ -79,15 +79,20 @@ if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
         $stmt->execute();
         $userData=array(); 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $wAccount = $row['wAccount']; //查出oName
+        $search_wName = $pdo->prepare("SELECT `wName` FROM `worker` WHERE `wAccount` = '$wAccount'");
+        $search_wName->execute();
+        $wName = $search_wName->fetch(PDO::FETCH_ASSOC);
             $userData[]=array(
+            'sId'=>$row['sId'],
             'Commendation'=>$row['Commendation'],
             'MinorMerit'=>$row['MinorMerit'],
             'MajorMerit'=>$row['MajorMerit'],
             'Admonition'=>$row['Admonition'],
             'MinorDemerit'=>$row['MinorDemerit'],
             'MajorDemerit'=>$row['MajorDemerit'],
-            'point'=>$row['point'],
             'updateTime'=>$row['updateTime'],
+            'wName'=>$wName['wName'],
             'reason'=>$row['reason']
             );
         }

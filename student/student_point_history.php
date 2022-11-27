@@ -268,9 +268,9 @@ $pdo = null;
                                     else if(option==3){
                                         var rescount = Object.keys(res).length;//資料個數
                                         document.getElementById("exportTable").innerHTML = "";
-                                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">時間</th><th scope="col">嘉獎</th><th scope="col">小功</th><th scope="col">大功</th><th scope="col">警告</th><th scope="col">小過</th><th scope="col">大過</th><th scope="col">點數變化</th><th scope="col">事由</th></tr>';
+                                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">時間</th><th scope="col">嘉獎</th><th scope="col">小功</th><th scope="col">大功</th><th scope="col">警告</th><th scope="col">小過</th><th scope="col">大過</th><th scope="col">記錄人</th><th scope="col">事由</th></tr>';
                                         for(var i=0;i<rescount;i++){
-                                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].updateTime + '</td><td>' + res[i].Commendation + '</td><td>' + res[i].MinorMerit + '</td><td>' + res[i].MajorMerit + '</td><td>' + res[i].Admonition + '</td><td>' + res[i].MinorDemerit +'</td><td>' + res[i].MajorDemerit +'</td><td>' + res[i].point +'</td><td>' + res[i].reason +'</td></tr>';
+                                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].updateTime + '</td><td>' + res[i].Commendation + '</td><td>' + res[i].MinorMerit + '</td><td>' + res[i].MajorMerit + '</td><td>' + res[i].Admonition + '</td><td>' + res[i].MinorDemerit +'</td><td>' + res[i].MajorDemerit +'</td><td>' + res[i].wName +'</td><td>' + res[i].reason +'</td></tr>';
                                         }
                                     }
                                 },

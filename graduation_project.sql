@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-11-27 03:47:11
+-- 產生時間： 2022-12-04 18:38:12
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 8.1.6
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `blockchainlogs` (
   `id` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
   `uploadTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `blockHeight` int(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -37,8 +38,13 @@ CREATE TABLE `blockchainlogs` (
 -- 傾印資料表的資料 `blockchainlogs`
 --
 
-INSERT INTO `blockchainlogs` (`id`, `uploadTime`, `blockHeight`) VALUES
-(0, '2022-11-18 12:40:20', 15996938);
+INSERT INTO `blockchainlogs` (`id`, `type`, `uploadTime`, `blockHeight`) VALUES
+(0, 1, '2022-12-04 12:18:59', 15996938),
+(1, 1, '2022-12-04 17:04:09', 8074084),
+(2, 2, '2022-12-04 17:30:08', 8074192),
+(3, 1, '2022-12-04 17:29:43', 8074191),
+(4, 3, '2022-12-04 17:30:37', 8074193),
+(5, 1, '2022-12-04 17:34:10', 8074208);
 
 -- --------------------------------------------------------
 

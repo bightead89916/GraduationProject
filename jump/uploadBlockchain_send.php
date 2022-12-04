@@ -34,6 +34,7 @@ if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
             
             $userData[]=array(
             'pId'=>$row['pId'],
+            'oId'=>$row['oId'],
             'sId'=>$row['sId'],
             'amount'=>$row['amount'],
             'price'=>$row['price'],
@@ -68,7 +69,9 @@ if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
             'amount'=>$row['amount'],
             'pName'=>$pName['pName'],
             'oName'=>$oName['oName'],
-            'transactionTime'=>$row['transactionTime']
+            'transactionTime'=>$row['transactionTime'],
+            'pId'=>$row['pId'],
+            'oId'=>$row['oId']
             );
         }
         echo json_encode($userData,JSON_UNESCAPED_UNICODE);
@@ -79,21 +82,22 @@ if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
         $stmt->execute();
         $userData=array(); 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-        $wAccount = $row['wAccount']; //查出oName
-        $search_wName = $pdo->prepare("SELECT `wName` FROM `worker` WHERE `wAccount` = '$wAccount'");
-        $search_wName->execute();
-        $wName = $search_wName->fetch(PDO::FETCH_ASSOC);
+            $wAccount = $row['wAccount']; //查出oName
+            $search_wName = $pdo->prepare("SELECT `wName` FROM `worker` WHERE `wAccount` = '$wAccount'");
+            $search_wName->execute();
+            $wName = $search_wName->fetch(PDO::FETCH_ASSOC);
             $userData[]=array(
-            'sId'=>$row['sId'],
-            'Commendation'=>$row['Commendation'],
-            'MinorMerit'=>$row['MinorMerit'],
-            'MajorMerit'=>$row['MajorMerit'],
-            'Admonition'=>$row['Admonition'],
-            'MinorDemerit'=>$row['MinorDemerit'],
-            'MajorDemerit'=>$row['MajorDemerit'],
-            'updateTime'=>$row['updateTime'],
-            'wName'=>$wName['wName'],
-            'reason'=>$row['reason']
+                'sId'=>$row['sId'],
+                'Commendation'=>$row['Commendation'],//獎懲
+                'MinorMerit'=>$row['MinorMerit'],
+                'MajorMerit'=>$row['MajorMerit'],
+                'Admonition'=>$row['Admonition'],
+                'MinorDemerit'=>$row['MinorDemerit'],
+                'MajorDemerit'=>$row['MajorDemerit'],//獎懲
+                'updateTime'=>$row['updateTime'],
+                'wAccount'=>$row['wAccount'],
+                'wName'=>$wName['wName'],
+                'reason'=>$row['reason']
             );
         }
         echo json_encode($userData,JSON_UNESCAPED_UNICODE);

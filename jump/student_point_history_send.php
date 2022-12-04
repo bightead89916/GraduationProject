@@ -2,7 +2,7 @@
 session_start();
 
 if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE){
-    $id = $_SESSION['login_id'];
+    $sId = $_SESSION['login_id'];
 }else{
     header('Location: ../login.php?msg=請再次登入');
 }
@@ -11,7 +11,7 @@ $pdo = null;
 //連線資料庫
 require_once('../connectDB.php');
 $pdo = connectDB();
-$sId = $_SESSION['login_id'];
+
 
 //if篩選回傳
 if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
@@ -26,18 +26,13 @@ if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
             $search_oName = $pdo->prepare("SELECT `oName` FROM `office` WHERE `oId` = '$oId'");
             $search_oName->execute();
             $oName = $search_oName->fetch(PDO::FETCH_ASSOC);
-
-            $pId = $row['pId']; //查出pName
-            $search_pName = $pdo->prepare("SELECT `pName` FROM `prize` WHERE `pId` = '$pId'");
-            $search_pName->execute();
-            $pName = $search_pName->fetch(PDO::FETCH_ASSOC);
             
             $userData[]=array(
             'pId'=>$row['pId'],
             'sId'=>$row['sId'],
             'amount'=>$row['amount'],
             'price'=>$row['price'],
-            'pName'=>$pName['pName'],
+            'pName'=>$row['pName'],
             'oName'=>$oName['oName'],
             'point'=>$row['point'],
             'transactionTime'=>$row['transactionTime']
@@ -79,20 +74,15 @@ if(isset($_POST["act"]) && $_POST["act"]=="postsomething") {
         $stmt->execute();
         $userData=array(); 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-        $wAccount = $row['wAccount']; //查出oName
-        $search_wName = $pdo->prepare("SELECT `wName` FROM `worker` WHERE `wAccount` = '$wAccount'");
-        $search_wName->execute();
-        $wName = $search_wName->fetch(PDO::FETCH_ASSOC);
             $userData[]=array(
-            'sId'=>$row['sId'],
             'Commendation'=>$row['Commendation'],
             'MinorMerit'=>$row['MinorMerit'],
             'MajorMerit'=>$row['MajorMerit'],
             'Admonition'=>$row['Admonition'],
             'MinorDemerit'=>$row['MinorDemerit'],
             'MajorDemerit'=>$row['MajorDemerit'],
+            'point'=>$row['point'],
             'updateTime'=>$row['updateTime'],
-            'wName'=>$wName['wName'],
             'reason'=>$row['reason']
             );
         }

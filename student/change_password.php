@@ -197,69 +197,24 @@ $sId=$id;
                     <li class="breadcrumb-item active" aria-current="page">學生資訊</li>
                 </ol>
             </nav>
-            <!--sql搜尋-->
-            <?php
-            require_once('../connectDB.php');
-            $pdo = connectDB();
-            //查學號姓名
-            $search_sName = $pdo->prepare("SELECT `sName` FROM `student` WHERE `sId` = '$sId'");
-            $search_sName->execute();
-            $sNamefetch = $search_sName->fetch(PDO::FETCH_ASSOC);
-            $sName = $sNamefetch['sName'];
-            
-            //查出持有點數
-            $search_point = $pdo->prepare("SELECT `point` FROM `student` WHERE `sId` = '$sId'");
-            $search_point->execute();
-            $point = $search_point->fetch(PDO::FETCH_ASSOC);
-            //查學生持有獎品，存成array
-            $sql = "SELECT * FROM `student_prize` WHERE `sId` = '$sId'";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute();
-            $userData=array(); 
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                //查出pName
-                $pId = $row['pId']; 
-                $search_pName = $pdo->prepare("SELECT `pName` FROM `prize` WHERE `pId` = '$pId'");
-                $search_pName->execute();
-                $pName = $search_pName->fetch(PDO::FETCH_ASSOC);
-                
-                $userData[]=array(
-                'id'=>$row['id'],
-                'amount'=>$row['amount'],
-                'pName'=>$pName['pName'],
-                'updateTime'=>$row['updateTime'],
-                'pId'=>$row['pId'],
-                'sId'=>$row['sId']
-                );
-            }
-            $count = count($userData);//資料筆數
-            $res = json_encode($userData,JSON_UNESCAPED_UNICODE);
-            $pdo = null;
-            ?>
-            <!--sql搜尋結束-->
-            <div class="rightTable">
-                <h3><?php echo $sId; echo $sName;?></h3>
-                <h3>目前持有點數:<?php echo $point['point'] ?></h3>
-                <table name="exportTable" id="exportTable">
-                    <!--js輸出table-->
-                    <script>
-                        //在這輸出學生持有的獎品資料
-                        var count = <?php echo $count ?>;//資料個數
-                        var res = <?php echo $res?>;//結果的json
-                        var sName = "<?php echo $sName?>";
-                    
-                        document.getElementById("exportTable").innerHTML = "";
-                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">持有的獎品</th><th scope="col">數量</th><th scope="col">詳情</th><th scope="col">使用</th><th scope="col">最後取得時間</th></tr>';
-                        for(var i=0;i<count;i++){
-                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].amount + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td><a class="btn btn-primary" href="../jump/QRcode.php?id=' + res[i].id+ '&pId='+ res[i].pId + '&pName='+ res[i].pName + '&sName='+ sName +'">使用QRcode</a></td><td>' + res[i].updateTime + '</td></tr>';
-                        }
-                    </script>
-                </table>
-                
-
-            </div>
+            <div>
+        <form action="../jump/change_Spassword_send.php" method="POST" enctype="multipart/form-data" id="form">
+		<legend class="">更改密碼</legend>
+		<div class="">
+		<div id="username" class="input_password" ><legend>帳號:<?php echo $sId?></legend></div><div class="felement fstatic" data-fieldtype="static"></div></div>
+        
+		<div id="password" class="input_password" ><label for="id_password">請輸入現在的密碼<span class="req"></label><div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="password" type="password" id="id_password" /></div></div>
+		<div id="newpassword1" class="input_password" ><label for="id_newpassword1">請輸入新密碼<span class="req"></label><div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="newpassword1" type="password" id="id_newpassword1" /></div></div>
+		<div id="newpassword2" class="input_password" ><label for="id_newpassword2">請輸入新密碼 (再次)<span class="req"></label><div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="newpassword2" type="password" id="id_newpassword2" /></div></div>
+		</div>
+        <input type="hidden" id="sId" name="sId" value="<?php echo $sId?>">
+        <input type="submit" class="btn btn-primary" value="確定送出">
+    </form>
         </div>
     </div>
+    <!-- <form action="../jump/change_password_send.php" method="POST" enctype="multipart/form-data" id="form">
+            <input type="submit" class="btn btn-primary" value="確定送出">
+            </form> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 

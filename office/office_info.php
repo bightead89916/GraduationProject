@@ -196,6 +196,7 @@ $pdo = null;
                     <!-- <li><a href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
                     <li><a href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
                     <li><a href="uploadBlockchain.php"><span class="min-i-arrow"></span>上傳區塊鏈</a></li>
+                    <li><a href="change_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
                 </ul>
             </div>
         </div>
@@ -210,6 +211,7 @@ $pdo = null;
                     <!-- <li><a class="dropdown-item" href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
                     <li><a class="dropdown-item" href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
                     <li><a class="dropdown-item" href="uploadBlockchain.php"><span class="min-i-arrow"></span>上傳區塊鏈</a></li>
+                    <li><a class="dropdown-item" href="change_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
                 </ul>
             </ul>
         </div>
@@ -257,7 +259,7 @@ $pdo = null;
                     document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].stock + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td><a id="discontinued" onclick="discontinued('+res[i].pId+')" class="btn btn-danger">下架</a></td><td>' + res[i].updateTime + '</td><td>' + res[i].expiryDate + '</td></tr></table>';
                 }
                 function discontinued(e){
-                    var r=confirm("按下按钮");
+                    var r=confirm("真的要下架嗎?");
                 if (r==true){
                     console.log(e);
                     window.location.href = "../jump/prize_discontinued.php?pId="+e+"";

@@ -1,13 +1,36 @@
 <?php
 session_start();
 
-if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == true){
+if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == true && $_SESSION['is_office'] == true){
     $id = $_SESSION['login_id'];
 }else{
+    $_SESSION['is_login'] = false;
     header('Location: ../login.php?msg=請再次登入');
 }
-$sId=$id;
+
+//連線資料庫
+require_once('../connectDB.php');
+$pdo = connectDB();
+//管理員資訊
+try{
+    $sql = "SELECT * FROM `worker` WHERE `wAccount`='{$id}';";
+    $user_array = $pdo->query($sql);
+
+    $user = $user_array->fetch();
+    //查oName
+    $oId=$user['oId'];
+    $sql = "SELECT * FROM `office` WHERE `oId`='{$oId}';";
+    $office_array = $pdo->query($sql);
+    $office = $office_array->fetch();
+    $oName=$office['oName'];
+}catch (PDOException $e){
+    echo $e->getMessage();
+}
+
+//關閉連接
+$pdo = null;
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -22,7 +45,7 @@ $sId=$id;
     <title>屏科學生獎勵兌換系統</title>
 
     <style>
-        * {
+              * {
             margin: 0;
             padding: 0;
         }
@@ -127,7 +150,7 @@ $sId=$id;
                     </ul>
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link" href="../jump/logout.php" id="portal_login_button">登出</a>
+                            <a class="nav-link" href="#" id="portal_login_button"><?php echo $oName.' '.$user['wName'] ?></a>
                         </li>
                     </ul>
                 </div>
@@ -136,7 +159,7 @@ $sId=$id;
     </div>
     <!--
     要有的功能；修改密碼，修改MetaMask地址，展示有的點數，展示買過的獎品
--->
+    -->
     <div class="container">
         <!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -165,105 +188,55 @@ $sId=$id;
           </button>
         </div> -->
         <!--左邊的清單-->
-        <div class="leftNav" id="leftNav">
-            <div class="ui-layout-west ui-layout-resizer-west-closed">
-                <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
-                    <li><a href="student_info.php"><span class="min-i-arrow"></span>學生資訊</a></li>
-                    <li><a href="student_point_history.php"><span class="min-i-arrow"></span>歷史紀錄</a></li>
-                    <li><a href="change_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
-                    <li><a href="forgot_password.php"><span class="min-i-arrow"></span>忘記密碼</a></li>
-                    <!-- <li><a href="apply_reward_consent.php"><span class="min-i-arrow"></span>申請獎勵</a></li> -->
+        <div class="navbar-collapse ui-layout-west ui-layout-resizer-west-closed">
+            <div class="leftNav">
+                <ul class="jd_menu_vertical" style="margin-left: 0; padding-left:0;">
+                    <li><a href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName?>已上架商品</a></li>
+                    <li><a href="prize_upload.php"><span class="min-i-arrow"></span>商品上架頁面</a></li>
+                    <!-- <li><a href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
+                    <li><a href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
+                    <li><a href="uploadBlockchain.php"><span class="min-i-arrow"></span>上傳區塊鏈</a></li>
                 </ul>
             </div>
         </div>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                學生資訊
+                管理員介面
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
-                    <li><a class="dropdown-item" href="student_info.php"><span class="min-i-arrow"></span>學生資訊</a></li>
-                    <li><a class="dropdown-item" href="student_point_history.php"><span class="min-i-arrow"></span>歷史紀錄</a></li>
-                    <li><a class="dropdown-item" href="change_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
-                    <li><a class="dropdown-item" href="forgot_password.php"><span class="min-i-arrow"></span>忘記密碼</a></li>
-                    <!-- <li><a class="dropdown-item" href="apply_reward_consent.php"><span class="min-i-arrow"></span>申請獎勵</a></li> -->
+                <li><a class="dropdown-item" href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName?>已上架商品</a></li>
+                    <li><a class="dropdown-item" href="prize_upload.php"><span class="min-i-arrow"></span>商品上架頁面</a></li>
+                    <!-- <li><a class="dropdown-item" href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
+                    <li><a class="dropdown-item" href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
+                    <li><a class="dropdown-item" href="uploadBlockchain.php"><span class="min-i-arrow"></span>上傳區塊鏈</a></li>
                 </ul>
             </ul>
         </div>
         <div class="rightDiv">
             <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../index.html">首頁</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">學生資訊</li>
+                    <li class="breadcrumb-item"><a href="../index.php">首頁</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">管理員介面</li>
                 </ol>
             </nav>
-            <!--sql搜尋-->
-            <?php
-            require_once('../connectDB.php');
-            $pdo = connectDB();
-            //查學號姓名
-            $search_sName = $pdo->prepare("SELECT `sName` FROM `student` WHERE `sId` = '$sId'");
-            $search_sName->execute();
-            $sNamefetch = $search_sName->fetch(PDO::FETCH_ASSOC);
-            $sName = $sNamefetch['sName'];
-            
-            //查出持有點數
-            $search_point = $pdo->prepare("SELECT `point` FROM `student` WHERE `sId` = '$sId'");
-            $search_point->execute();
-            $point = $search_point->fetch(PDO::FETCH_ASSOC);
-            //查學生持有獎品，存成array
-            $sql = "SELECT * FROM `student_prize` WHERE `sId` = '$sId'";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute();
-            $userData=array(); 
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                //查出pName
-                $pId = $row['pId']; 
-                $search_pName = $pdo->prepare("SELECT `pName` FROM `prize` WHERE `pId` = '$pId'");
-                $search_pName->execute();
-                $pName = $search_pName->fetch(PDO::FETCH_ASSOC);
-                
-                $userData[]=array(
-                'id'=>$row['id'],
-                'amount'=>$row['amount'],
-                'pName'=>$pName['pName'],
-                'updateTime'=>$row['updateTime'],
-                'pId'=>$row['pId'],
-                'sId'=>$row['sId']
-                );
-            }
-            $count = count($userData);//資料筆數
-            $res = json_encode($userData,JSON_UNESCAPED_UNICODE);
-            $pdo = null;
-            ?>
-            <!--sql搜尋結束-->
-            <div class="rightTable">
-                <h3><?php echo $sId; echo $sName;?></h3>
-                <h3>目前持有點數:<?php echo $point['point'] ?></h3>
-                <table name="exportTable" id="exportTable">
-                    <!--js輸出table-->
-                    <script>
-                        //在這輸出學生持有的獎品資料
-                        var count = <?php echo $count ?>;//資料個數
-                        var res = <?php echo $res?>;//結果的json
-                        var sName = "<?php echo $sName?>";
-                    
-                        document.getElementById("exportTable").innerHTML = "";
-                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">持有的獎品</th><th scope="col">數量</th><th scope="col">詳情</th><th scope="col">使用</th><th scope="col">最後取得時間</th></tr>';
-                        for(var i=0;i<count;i++){
-                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].amount + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td><a class="btn btn-primary" href="../jump/QRcode.php?id=' + res[i].id+ '&pId='+ res[i].pId + '&pName='+ res[i].pName + '&sName='+ sName +'">使用QRcode</a></td><td>' + res[i].updateTime + '</td></tr>';
-                        }
-                    </script>
-                </table>
-                
-
-            </div>
+            <div><form action="../jump/change_Wpassword_send.php" method="POST" enctype="multipart/form-data" id="form">
+		<legend class="">更改密碼</legend>
+		<div class="">
+		<div id="username" class="input_password" ><legend>帳號:<?php echo $id?></legend></div><div class="felement fstatic" data-fieldtype="static"></div></div>
+        
+		<div id="password" class="input_password" ><label for="id_password">請輸入現在的密碼<span class="req"></label><div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="password" type="password" id="id_password" /></div></div>
+		<div id="newpassword1" class="input_password" ><label for="id_newpassword1">請輸入新密碼<span class="req"></label><div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="newpassword1" type="password" id="id_newpassword1" /></div></div>
+		<div id="newpassword2" class="input_password" ><label for="id_newpassword2">請輸入新密碼 (再次)<span class="req"></label><div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="newpassword2" type="password" id="id_newpassword2" /></div></div>
+		</div>
+        <input type="hidden" id="wAccount" name="wAccount" value="<?php echo $id?>">
+        <input type="submit" class="btn btn-primary" value="確定送出">
+    </form>
+        </div>
+        </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 
 </html>
-<?php
-$pdo = null;
-?>

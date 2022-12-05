@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == true && $_SESSION['is_office'] == true){
+if (isset($_SESSION['is_login']) && $_SESSION['is_login'] == true && $_SESSION['is_office'] == true) {
     $id = $_SESSION['login_id'];
-}else{
+} else {
     $_SESSION['is_login'] = false;
     header('Location: ../login.php?msg=請再次登入');
 }
@@ -12,18 +12,18 @@ if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == true && $_SESSION['i
 require_once('../connectDB.php');
 $pdo = connectDB();
 //管理員資訊
-try{
+try {
     $sql = "SELECT * FROM `worker` WHERE `wAccount`='{$id}';";
     $user_array = $pdo->query($sql);
 
     $user = $user_array->fetch();
     //查oName
-    $oId=$user['oId'];
+    $oId = $user['oId'];
     $sql = "SELECT * FROM `office` WHERE `oId`='{$oId}';";
     $office_array = $pdo->query($sql);
     $office = $office_array->fetch();
-    $oName=$office['oName'];
-}catch (PDOException $e){
+    $oName = $office['oName'];
+} catch (PDOException $e) {
     echo $e->getMessage();
 }
 
@@ -45,30 +45,30 @@ $pdo = null;
     <title>屏科學生獎勵兌換系統</title>
 
     <style>
-              * {
+        * {
             margin: 0;
             padding: 0;
         }
-        
+
         .main-footer {
             background-color: rgb(150, 150, 150);
         }
-        
+
         .carousel {
             margin-bottom: 10px;
         }
-        
+
         .container .leftNav {
             width: 20%;
             float: left;
             padding-right: 10px;
         }
-        
+
         .container .rightDiv {
             width: 80%;
             float: right;
         }
-        
+
         .leftNav ul li {
             font-size: large;
             background: url('../images/leftNav_bg.jpg') repeat-x;
@@ -76,7 +76,7 @@ $pdo = null;
             border-bottom: 1px solid #c5c5c5;
             line-height: 40px;
         }
-        
+
         .leftNav ul li a {
             color: #494949;
             display: block;
@@ -85,49 +85,51 @@ $pdo = null;
             /* Old browsers */
             background: url('../images/topNav_left.jpg') repeat-x;
         }
-        
+
         .leftNav ul li a:hover {
             color: #494949;
             /*background: #fef68b url('../images/leftNav_bg_hover.jpg') repeat-x;*/
             background: url('../images/topNav_left_h.jpg') repeat-x;
             text-decoration: none;
         }
-        
+
         .table,
         td,
         th {
             padding: 5px;
             text-align: center;
         }
-        
+
         .rightDiv table td {
             font-size: large;
             font-family: verdana;
             border: 1px solid #290023;
         }
-        
+
         .rightDiv table th {
             font-size: large;
             border: 1px solid #290023;
             background: rgb(235, 234, 234);
         }
-        
+
         .rightDiv table thead {
             font-weight: bold;
             font-size: x-large;
         }
-        
+
         .dropdown {
             display: none;
         }
-        
+
         @media (max-width: 768px) {
             .leftNav {
                 display: none;
             }
+
             .container .rightDiv {
                 width: 100%;
             }
+
             .dropdown {
                 display: contents;
             }
@@ -143,14 +145,14 @@ $pdo = null;
                     <img src="https://cop.npust.edu.tw/wp-content/uploads/2021/04/NPUSTLogo.svg-1024x564.png" alt="" width="45" height="24" class="d-inline-block align-text-top"> 屏科大學生獎勵兌換系統
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                     </ul>
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="portal_login_button"><?php echo $oName.' '.$user['wName'] ?></a>
+                            <a class="nav-link" href="#" id="portal_login_button"><?php echo $oName . ' ' . $user['wName'] ?></a>
                         </li>
                     </ul>
                 </div>
@@ -191,7 +193,7 @@ $pdo = null;
         <div class="navbar-collapse ui-layout-west ui-layout-resizer-west-closed">
             <div class="leftNav">
                 <ul class="jd_menu_vertical" style="margin-left: 0; padding-left:0;">
-                    <li><a href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName?>已上架商品</a></li>
+                    <li><a href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName ?>已上架商品</a></li>
                     <li><a href="prize_upload.php"><span class="min-i-arrow"></span>商品上架頁面</a></li>
                     <!-- <li><a href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
                     <li><a href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
@@ -206,7 +208,7 @@ $pdo = null;
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
-                <li><a class="dropdown-item" href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName?>已上架商品</a></li>
+                    <li><a class="dropdown-item" href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName ?>已上架商品</a></li>
                     <li><a class="dropdown-item" href="prize_upload.php"><span class="min-i-arrow"></span>商品上架頁面</a></li>
                     <!-- <li><a class="dropdown-item" href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
                     <li><a class="dropdown-item" href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
@@ -223,53 +225,82 @@ $pdo = null;
                 </ol>
             </nav>
             <!--js輸出table-->
-            <h3><?php echo $oName?>目前上架的獎品</h3>
+            <h3><?php echo $oName ?>目前上架的獎品</h3>
             <div class="rightTable">
-            <!--sql搜尋-->
-            <?php
-            require_once('../connectDB.php');
-            $pdo = connectDB();
-            //查office發行過什麼獎品，存成array
+                <!--sql搜尋-->
+                <?php
+                require_once('../connectDB.php');
+                $pdo = connectDB();
+                //查office發行過什麼獎品，存成array
                 $sql = "SELECT * FROM `prize` WHERE `oId` = '$oId' And `stock` !=0 ";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute();
-                $userData=array();
-                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    $userData[]=array(
-                    'pName'=>$row['pName'],
-                    'stock'=>$row['stock'],
-                    'pId'=>$row['pId'],
-                    'updateTime'=>$row['updateTime'],
-                    'expiryDate'=>$row['expiryDate'],
+                $userData = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $userData[] = array(
+                        'pName' => $row['pName'],
+                        'stock' => $row['stock'],
+                        'pId' => $row['pId'],
+                        'updateTime' => $row['updateTime'],
+                        'expiryDate' => $row['expiryDate'],
                     );
                 }
-            $count = count($userData);//資料筆數
-            $res = json_encode($userData,JSON_UNESCAPED_UNICODE);
-            $pdo = null;
-            ?>
-            <table name="exportTable" id="exportTable">
-            <script>
-                
-                var count = <?php echo $count ?>;//資料個數
-                var res = <?php echo $res?>;//結果的json
-                    
-                document.getElementById("exportTable").innerHTML = "";
-                document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">上架的獎品</th><th scope="col">存量</th><th scope="col">詳情</th><th scope="col">下架</th><th scope="col">上架時間</th><th scope="col">到期日</th></tr>';
-                for(var i=0;i<count;i++){
-                    document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].stock + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId+ '">詳情</a></td><td><a id="discontinued" onclick="discontinued('+res[i].pId+')" class="btn btn-danger">下架</a></td><td>' + res[i].updateTime + '</td><td>' + res[i].expiryDate + '</td></tr></table>';
-                }
-                function discontinued(e){
-                    var r=confirm("真的要下架嗎?");
-                if (r==true){
-                    console.log(e);
-                    window.location.href = "../jump/prize_discontinued.php?pId="+e+"";
-                }}
-            </script>
-            </table>
-            
-        </div>
+                $count = count($userData); //資料筆數
+                $res = json_encode($userData, JSON_UNESCAPED_UNICODE);
+                $pdo = null;
+                ?>
+                <table name="exportTable" id="exportTable">
+                    <script>
+                        var count = <?php echo $count ?>; //資料個數
+                        var res = <?php echo $res ?>; //結果的json
+
+                        document.getElementById("exportTable").innerHTML = "";
+                        document.getElementById("exportTable").innerHTML += '<table><tr><th scope="col">上架的獎品</th><th scope="col">存量</th><th scope="col">詳情</th><th scope="col">下架</th><th scope="col">上架時間</th><th scope="col">到期日</th></tr>';
+                        for (var i = 0; i < count; i++) {
+                            document.getElementById("exportTable").innerHTML += '<tr><td>' + res[i].pName + '</td><td>' + res[i].stock + '</td><td><a class="btn btn-secondary" href="/GraduationProject/prize_info.php?id=' + res[i].pId + '">詳情</a></td><td><a id="discontinued" onclick="discontinued(' + res[i].pId + ')" class="btn btn-danger">下架</a></td><td>' + res[i].updateTime + '</td><td>' + res[i].expiryDate + '</td></tr></table>';
+                        }
+
+                        function discontinued(e) {
+                            const swalWithBootstrapButtons = Swal.mixin({
+                                customClass: {
+                                    confirmButton: 'btn btn-danger',
+                                    cancelButton: 'btn btn-success'
+                                },
+                                buttonsStyling: false
+                            })
+
+                            swalWithBootstrapButtons.fire({
+                                title: '確定要將獎品下架?',
+                                text: "下架無法撤銷",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: '下架獎品',
+                                cancelButtonText: '取消',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    swalWithBootstrapButtons.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    )
+                                    window.location.href = "../jump/prize_discontinued.php?pId=" + e + ""; //跳到下架獎品
+                                }
+                            })
+                            //var r=confirm("真的要下架嗎?");
+                            if (r == true) {
+                                console.log(e);
+                                window.location.href = "../jump/prize_discontinued.php?pId=" + e + "";
+                            }
+                        }
+                    </script>
+                </table>
+
+            </div>
         </div>
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--sweetalert2-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 

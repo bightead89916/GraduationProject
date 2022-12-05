@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-if(isset($_GET['msg'])){
+if (isset($_GET['msg'])) {
     $msg = $_GET['msg'];
     echo "<script type='text/javascript'>alert('$msg');</script>";
     $msg = null;
 }
 
 //取得商品ID
-if(!isset($_GET['id'])){
+if (!isset($_GET['id'])) {
     header('Location: index.php');
 }
 $id = $_GET['id'];
@@ -18,7 +18,7 @@ $pdo = null;
 require_once('connectDB.php');
 $pdo = connectDB();
 
-try{//取得商品資訊
+try { //取得商品資訊
     $sql = "SELECT * FROM `prize` WHERE `pId`={$id};";
     $commodity_array = $pdo->query($sql);
     $commodity = $commodity_array->fetch();
@@ -26,15 +26,15 @@ try{//取得商品資訊
     $sql = "SELECT * FROM `prizelogs` WHERE `pId`={$id};";
     $resume = $pdo->query($sql);
     $count = $resume->rowCount();
-    $historysell = 0;//商品總共賣出的次數
-    if($count == ""){
+    $historysell = 0; //商品總共賣出的次數
+    if ($count == "") {
         $count = 0;
     }
-    while($row = $resume->fetch(PDO::FETCH_ASSOC)){ //搜尋所有prizelog裡的amount，加起來
-        $historysell = $historysell+$row['amount'];
+    while ($row = $resume->fetch(PDO::FETCH_ASSOC)) { //搜尋所有prizelog裡的amount，加起來
+        $historysell = $historysell + $row['amount'];
     }
-    $count=$historysell;
-}catch (PDOException $e){
+    $count = $historysell;
+} catch (PDOException $e) {
     echo $e->getMessage();
 }
 
@@ -59,11 +59,11 @@ $pdo = null;
         .navbar {
             background-color: white;
         }
-        
+
         .main-footer {
             background-color: rgb(150, 150, 150);
         }
-        
+
         .carousel {
             margin-bottom: 10px;
         }
@@ -78,42 +78,39 @@ $pdo = null;
                     <img src="https://cop.npust.edu.tw/wp-content/uploads/2021/04/NPUSTLogo.svg-1024x564.png" alt="" width="45" height="24" class="d-inline-block align-text-top"> 屏科大學生獎勵兌換系統
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                <?php if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE):?>
-                    <ul class="nav justify-content-end">
-                        <li class="nav-item">
-                            <a class="nav-link" href="jump/logout.php" id="portal_login_button">登出</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <!-- <li class="nav-item">
+                    <?php if (isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE) : ?>
+                        <ul class="nav justify-content-end">
+                            <li class="nav-item">
+                                <a class="nav-link" href="jump/logout.php" id="portal_login_button">登出</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav">
+                            <!-- <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li> -->
-                        <?php if(isset($_SESSION['is_office']) && $_SESSION['is_office'] == true):?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="office/office_info.php">個人資訊(Office)</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="confirm.php">待確認單</a>
-                        </li>
-                        <?php else:?>
-                        <li class="nav-item">
-                        <a class="nav-link" href="student/student_info.php">個人資訊(Student)</a>
-                        </li>
-                        <?php endif;?>
-                        <!-- <li class="nav-item">
+                            <?php if (isset($_SESSION['is_office']) && $_SESSION['is_office'] == true) : ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="office/office_info.php">個人資訊(Office)</a>
+                                </li>
+                            <?php else : ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="student/student_info.php">個人資訊(Student)</a>
+                                </li>
+                            <?php endif; ?>
+                            <!-- <li class="nav-item">
                             <a class="nav-link disabled">Disabled</a>
                         </li> -->
-                    </ul>
-                    <?php else:?>
-                    <ul class="nav justify-content-end">
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.php" id="portal_login_button">登入</a>
-                        </li>
-                    </ul>
-                    <?php endif;?>
+                        </ul>
+                    <?php else : ?>
+                        <ul class="nav justify-content-end">
+                            <li class="nav-item">
+                                <a class="nav-link" href="login.php" id="portal_login_button">登入</a>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
@@ -121,28 +118,27 @@ $pdo = null;
             <div class="row">
                 <div class="col-12 col-md-5">
 
-                    <img src="jump/<?php echo $commodity['pictureAddress']?>"
-                        class="img-thumbnail" 
-                        alt="<?php echo $commodity['pName'] ?>">
+                    <img src="jump/<?php echo $commodity['pictureAddress'] ?>" class="img-thumbnail" alt="<?php echo $commodity['pName'] ?>">
                 </div>
                 <div class="col-12 col-md-7">
                     <br>
                     <h1><?php echo $commodity['pName'] ?></h1>
-                    已售出 <?php echo $count?> <br><br>
-                    <h5>兌換點數：<?php echo $commodity['price']?> 點</h5>
-                    <h5><?php //echo "商品地點：";echo $commodity['place']?></h5>
-                    <h5>商品描述：<br><?php echo $commodity['content']?></h5>
+                    已售出 <?php echo $count ?> <br><br>
+                    <h5>兌換點數：<?php echo $commodity['price'] ?> 點</h5>
+                    <h5><?php //echo "商品地點：";echo $commodity['place']
+                        ?></h5>
+                    <h5>商品描述：<br><?php echo $commodity['content'] ?></h5>
                     <br><br><br><br><br><br>
                     <div class="d-grid gap-2 col-6 mx-auto">
-                    <form action="jump/sendBuy.php?pId=<?php echo $commodity['pId']?>" method="POST" enctype="multipart/form-data" id="form">
-                        <select class="form-select form-select-lg mb-3" id="amount" name="amount" aria-label="Default select example" required="required">
-                        <option selected value="">購買數量</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        </select>
-                        <input type="submit" class="btn btn-primary" value="確定送出">
-                    </from>
+                        <form action="jump/sendBuy.php?pId=<?php echo $commodity['pId'] ?>" method="POST" enctype="multipart/form-data" id="form">
+                            <select class="form-select form-select-lg mb-3" id="amount" name="amount" aria-label="Default select example" required="required">
+                                <option selected value="">購買數量</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <input type="submit" class="btn btn-primary" value="確定送出">
+                            </from>
                     </div>
 
                 </div>

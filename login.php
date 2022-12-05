@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE){
+if (isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE) {
     header('Location: index.php');
 }
 
-if(isset($_GET['msg'])){
+if (isset($_GET['msg'])) {
     $msg = $_GET['msg'];
     echo "<script type='text/javascript'>alert('$msg');</script>";
 }
@@ -30,40 +30,40 @@ if(isset($_GET['msg'])){
             margin: 0;
             padding: 0;
         }
-        
+
         .navbar {
             background-color: white;
         }
-        
+
         .main-footer {
             background-color: rgb(150, 150, 150);
         }
-        
+
         .h2 {
             text-align: center;
         }
-        
+
         .login-box .login-label {
             width: 33%;
             float: left;
             text-align: right;
         }
-        
+
         .login-box .login-input {
             width: 66%;
             float: right;
         }
-        
+
         .login-box .login-input input {
             width: 50%;
         }
-        
+
         .content-login-box {
             margin: 5px;
             padding: 10px;
             text-align: center;
         }
-        
+
         .clearer {
             background: transparent;
             border-width: 0;
@@ -84,8 +84,8 @@ if(isset($_GET['msg'])){
                     <img src="https://cop.npust.edu.tw/wp-content/uploads/2021/04/NPUSTLogo.svg-1024x564.png" alt="" width="45" height="24" class="d-inline-block align-text-top"> 屏科大學生獎勵兌換系統
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="nav justify-content-end">
 
@@ -128,19 +128,19 @@ if(isset($_GET['msg'])){
                 <div class="login-box">
                     <div class="login-label col-4 mb-3 mt-1">
                         <label for="username">
-                                帳號: 
+                            帳號:
                         </label>
                     </div>
                     <div class="login-input col-8 mb-3 mt-1">
-                        <input type="text" name="username" id="username" placeholder="預設為學號" value="">
+                        <input required="required" type="text" name="username" id="username" placeholder="預設為學號" value="">
                     </div>
                     <div class="login-label col-4">
                         <label class="lb mt-2" for="username">
-                                密碼: 
+                            密碼:
                         </label>
                     </div>
                     <div class="login-input col-8">
-                        <input type="password" name="password" id="password" placeholder="預設為身分證字號" value="">
+                        <input required="required" type="password" name="password" id="password" placeholder="預設為身分證字號" value="">
                     </div>
                 </div>
             </div>

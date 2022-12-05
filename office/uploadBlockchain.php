@@ -44,6 +44,7 @@ $pdo = null;
     <title>屏科學生獎勵兌換系統</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.0/web3.min.js"></script>
     <script src="../abi.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script><!--sweetalert2-->
 
     <!-- The legacy-web3 script must run BEFORE your other scripts. -->
     <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
@@ -510,7 +511,12 @@ $pdo = null;
                                                     from: user
                                                 }).then(function(data) {
                                                     let blockId = data.blockNumber;
-                                                    alert("成功上鏈");
+                                                    Swal.fire(
+                                                        '成功上鏈!',
+                                                        '已上傳獎品兌換紀錄',
+                                                        'success'
+                                                    )
+                                                    //alert("成功上鏈");
                                                     console.log(blockId);
                                                     //sleep(5000);
                                                     $.ajax({
@@ -564,7 +570,11 @@ $pdo = null;
                                                     from: user
                                                 }).then(function(data) {
                                                     let blockId = data.blockNumber;
-                                                    alert("成功上鏈");
+                                                    Swal.fire(
+                                                        '成功上鏈!',
+                                                        '已上傳使用紀錄',
+                                                        'success'
+                                                    )
                                                     console.log(blockId);
                                                     $.ajax({
                                                         url: '../jump/upBlockchainLog.php',
@@ -624,7 +634,11 @@ $pdo = null;
                                                     from: user
                                                 }).then(function(data) {
                                                     let blockId = data.blockNumber;
-                                                    alert("成功上鏈");
+                                                    Swal.fire(
+                                                        '成功上鏈!',
+                                                        '已上傳獎懲紀錄',
+                                                        'success'
+                                                    )
                                                     console.log(blockId);
                                                     $.ajax({
                                                         url: '../jump/upBlockchainLog.php',

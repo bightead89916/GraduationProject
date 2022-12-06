@@ -44,7 +44,8 @@ $pdo = null;
     <title>屏科學生獎勵兌換系統</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.0/web3.min.js"></script>
     <script src="../abi.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script><!--sweetalert2-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--sweetalert2-->
 
     <!-- The legacy-web3 script must run BEFORE your other scripts. -->
     <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
@@ -212,6 +213,7 @@ $pdo = null;
                     <!-- <li><a href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
                     <li><a href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
                     <li><a href="uploadBlockchain.php"><span class="min-i-arrow"></span>上傳區塊鏈</a></li>
+                    <li><a href="change_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
                 </ul>
             </div>
         </div>
@@ -226,6 +228,7 @@ $pdo = null;
                     <!-- <li><a class="dropdown-item" href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
                     <li><a class="dropdown-item" href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
                     <li><a class="dropdown-item" href="uploadBlockchain.php"><span class="min-i-arrow"></span>上傳區塊鏈</a></li>
+                    <li><a class="dropdown-item" href="change_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
                 </ul>
             </ul>
         </div>
@@ -347,7 +350,7 @@ $pdo = null;
                                                         console.log(NameList);
                                                         console.log(data[0].length);
                                                         for (var i = 0; i < data[0].length; i++) {
-                                                            document.getElementById("exportTable").innerHTML += '<tr><td>' + data[0][i] + '</td><td>' + data[1][i] + '</td><td>' + NameList['office'][data[2][i]-1] + '</td><td>' + NameList['prize'][data[3][i]] + '</td><td>' + data[4][i] + '</td><td>' + data[5][i] + '</td><td>' + (data[4][i] * data[5][i]) + '</td></tr></table>';
+                                                            document.getElementById("exportTable").innerHTML += '<tr><td>' + data[0][i] + '</td><td>' + data[1][i] + '</td><td>' + NameList['office'][data[2][i] - 1] + '</td><td>' + NameList['prize'][data[3][i]] + '</td><td>' + data[4][i] + '</td><td>' + data[5][i] + '</td><td>' + (data[4][i] * data[5][i]) + '</td></tr></table>';
                                                             //console.log(data[0][i]);
                                                         }
                                                     }
@@ -392,7 +395,7 @@ $pdo = null;
                                                         let NameList = res;
                                                         console.log(data[0].length);
                                                         for (var i = 0; i < data[0].length; i++) {
-                                                            document.getElementById("exportTable").innerHTML += '<tr><td>' + data[2][i] + '</td><td>' + data[0][i] + '</td><td>' + NameList['office'][data[4][i]-1] + '</td><td>' + NameList['prize'][data[1][i]] + '</td><td>' + data[3][i] + '</td></tr></table>';
+                                                            document.getElementById("exportTable").innerHTML += '<tr><td>' + data[2][i] + '</td><td>' + data[0][i] + '</td><td>' + NameList['office'][data[4][i] - 1] + '</td><td>' + NameList['prize'][data[1][i]] + '</td><td>' + data[3][i] + '</td></tr></table>';
                                                             //console.log(data[0][i]);
                                                         }
                                                     }
@@ -558,7 +561,7 @@ $pdo = null;
                                             let sId = [];
                                             let amount = [];
                                             let oId = [];
-                                            for (let i = 0; i < rescount; ++i){
+                                            for (let i = 0; i < rescount; ++i) {
                                                 transactionTime[i] = res[i].transactionTime;
                                                 pId[i] = String(res[i].pId);
                                                 sId[i] = res[i].sId;

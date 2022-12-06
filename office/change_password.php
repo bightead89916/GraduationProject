@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == true && $_SESSION['is_office'] == true){
+if (isset($_SESSION['is_login']) && $_SESSION['is_login'] == true && $_SESSION['is_office'] == true) {
     $id = $_SESSION['login_id'];
-}else{
+} else {
     $_SESSION['is_login'] = false;
     header('Location: ../login.php?msg=請再次登入');
 }
@@ -12,18 +12,18 @@ if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == true && $_SESSION['i
 require_once('../connectDB.php');
 $pdo = connectDB();
 //管理員資訊
-try{
+try {
     $sql = "SELECT * FROM `worker` WHERE `wAccount`='{$id}';";
     $user_array = $pdo->query($sql);
 
     $user = $user_array->fetch();
     //查oName
-    $oId=$user['oId'];
+    $oId = $user['oId'];
     $sql = "SELECT * FROM `office` WHERE `oId`='{$oId}';";
     $office_array = $pdo->query($sql);
     $office = $office_array->fetch();
-    $oName=$office['oName'];
-}catch (PDOException $e){
+    $oName = $office['oName'];
+} catch (PDOException $e) {
     echo $e->getMessage();
 }
 
@@ -45,30 +45,30 @@ $pdo = null;
     <title>屏科學生獎勵兌換系統</title>
 
     <style>
-              * {
+        * {
             margin: 0;
             padding: 0;
         }
-        
+
         .main-footer {
             background-color: rgb(150, 150, 150);
         }
-        
+
         .carousel {
             margin-bottom: 10px;
         }
-        
+
         .container .leftNav {
             width: 20%;
             float: left;
             padding-right: 10px;
         }
-        
+
         .container .rightDiv {
             width: 80%;
             float: right;
         }
-        
+
         .leftNav ul li {
             font-size: large;
             background: url('../images/leftNav_bg.jpg') repeat-x;
@@ -76,7 +76,7 @@ $pdo = null;
             border-bottom: 1px solid #c5c5c5;
             line-height: 40px;
         }
-        
+
         .leftNav ul li a {
             color: #494949;
             display: block;
@@ -85,49 +85,51 @@ $pdo = null;
             /* Old browsers */
             background: url('../images/topNav_left.jpg') repeat-x;
         }
-        
+
         .leftNav ul li a:hover {
             color: #494949;
             /*background: #fef68b url('../images/leftNav_bg_hover.jpg') repeat-x;*/
             background: url('../images/topNav_left_h.jpg') repeat-x;
             text-decoration: none;
         }
-        
+
         .table,
         td,
         th {
             padding: 5px;
             text-align: center;
         }
-        
+
         .rightDiv table td {
             font-size: large;
             font-family: verdana;
             border: 1px solid #290023;
         }
-        
+
         .rightDiv table th {
             font-size: large;
             border: 1px solid #290023;
             background: rgb(235, 234, 234);
         }
-        
+
         .rightDiv table thead {
             font-weight: bold;
             font-size: x-large;
         }
-        
+
         .dropdown {
             display: none;
         }
-        
+
         @media (max-width: 768px) {
             .leftNav {
                 display: none;
             }
+
             .container .rightDiv {
                 width: 100%;
             }
+
             .dropdown {
                 display: contents;
             }
@@ -143,14 +145,14 @@ $pdo = null;
                     <img src="https://cop.npust.edu.tw/wp-content/uploads/2021/04/NPUSTLogo.svg-1024x564.png" alt="" width="45" height="24" class="d-inline-block align-text-top"> 屏科大學生獎勵兌換系統
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                     </ul>
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="portal_login_button"><?php echo $oName.' '.$user['wName'] ?></a>
+                            <a class="nav-link" href="#" id="portal_login_button"><?php echo $oName . ' ' . $user['wName'] ?></a>
                         </li>
                     </ul>
                 </div>
@@ -191,11 +193,12 @@ $pdo = null;
         <div class="navbar-collapse ui-layout-west ui-layout-resizer-west-closed">
             <div class="leftNav">
                 <ul class="jd_menu_vertical" style="margin-left: 0; padding-left:0;">
-                    <li><a href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName?>已上架商品</a></li>
+                    <li><a href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName ?>已上架商品</a></li>
                     <li><a href="prize_upload.php"><span class="min-i-arrow"></span>商品上架頁面</a></li>
                     <!-- <li><a href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
                     <li><a href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
                     <li><a href="uploadBlockchain.php"><span class="min-i-arrow"></span>上傳區塊鏈</a></li>
+                    <li><a href="change_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
                 </ul>
             </div>
         </div>
@@ -205,11 +208,12 @@ $pdo = null;
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                 <ul class="jd_menu_vertical" aria-labelledby="dropdownMenu" style="margin-left: 0; padding-left:0;">
-                <li><a class="dropdown-item" href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName?>已上架商品</a></li>
+                    <li><a class="dropdown-item" href="office_info.php"><span class="min-i-arrow"></span><?php echo $oName ?>已上架商品</a></li>
                     <li><a class="dropdown-item" href="prize_upload.php"><span class="min-i-arrow"></span>商品上架頁面</a></li>
                     <!-- <li><a class="dropdown-item" href="give_reward_consent.html"><span class="min-i-arrow"></span>獎懲申請書</a></li> -->
                     <li><a class="dropdown-item" href="give_reward_form.php"><span class="min-i-arrow"></span>給予獎懲</a></li>
                     <li><a class="dropdown-item" href="uploadBlockchain.php"><span class="min-i-arrow"></span>上傳區塊鏈</a></li>
+                    <li><a class="dropdown-item" href="change_password.php"><span class="min-i-arrow"></span>更改密碼</a></li>
                 </ul>
             </ul>
         </div>
@@ -220,21 +224,32 @@ $pdo = null;
                     <li class="breadcrumb-item active" aria-current="page">管理員介面</li>
                 </ol>
             </nav>
-            <div><form action="../jump/change_Wpassword_send.php" method="POST" enctype="multipart/form-data" id="form">
-		<legend class="">更改密碼</legend>
-		<div class="">
-		<div id="username" class="input_password" ><legend>帳號:<?php echo $id?></legend></div><div class="felement fstatic" data-fieldtype="static"></div></div>
-        
-		<div id="password" class="input_password" ><label for="id_password">請輸入現在的密碼<span class="req"></label><div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="password" type="password" id="id_password" /></div></div>
-		<div id="newpassword1" class="input_password" ><label for="id_newpassword1">請輸入新密碼<span class="req"></label><div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="newpassword1" type="password" id="id_newpassword1" /></div></div>
-		<div id="newpassword2" class="input_password" ><label for="id_newpassword2">請輸入新密碼 (再次)<span class="req"></label><div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="newpassword2" type="password" id="id_newpassword2" /></div></div>
-		</div>
-        <input type="hidden" id="wAccount" name="wAccount" value="<?php echo $id?>">
-        <input type="submit" class="btn btn-primary" value="確定送出">
-    </form>
+            <div>
+                <form action="../jump/change_Wpassword_send.php" method="POST" enctype="multipart/form-data" id="form">
+                    <legend class="">更改密碼</legend>
+                    <div class="">
+                        <div id="username" class="input_password">
+                            <legend>帳號:<?php echo $id ?></legend>
+                        </div>
+                        <div class="felement fstatic" data-fieldtype="static"></div>
+                    </div>
+
+                    <div id="password" class="input_password"><label for="id_password">請輸入現在的密碼<span class="req"></label>
+                        <div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="password" type="password" id="id_password" /></div>
+                    </div>
+                    <div id="newpassword1" class="input_password"><label for="id_newpassword1">請輸入新密碼<span class="req"></label>
+                        <div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="newpassword1" type="password" id="id_newpassword1" /></div>
+                    </div>
+                    <div id="newpassword2" class="input_password"><label for="id_newpassword2">請輸入新密碼 (再次)<span class="req"></label>
+                        <div class="" data-fieldtype="password"><input required="required" autocomplete="off" name="newpassword2" type="password" id="id_newpassword2" /></div>
+                    </div>
+            </div>
+            <input type="hidden" id="wAccount" name="wAccount" value="<?php echo $id ?>">
+            <input type="submit" class="btn btn-primary" value="確定送出">
+            </form>
         </div>
-        </div>
-        </div>
+    </div>
+    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

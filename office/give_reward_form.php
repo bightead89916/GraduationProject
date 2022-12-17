@@ -80,7 +80,8 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="../index.php">
-                    <img src="https://cop.npust.edu.tw/wp-content/uploads/2021/04/NPUSTLogo.svg-1024x564.png" alt="" width="45" height="24" class="d-inline-block align-text-top"> 屏科大學生獎勵兌換系統
+                    <img src="https://cop.npust.edu.tw/wp-content/uploads/2021/04/NPUSTLogo.svg-1024x564.png" alt="" width="45" height="24" class="d-inline-block align-text-top"> 
+                    屏科大學生獎勵兌換系統
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -88,7 +89,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link" href="獎懲介面.html">獎懲介面</a>
+                            <!-- <a class="nav-link" href="office_info.php">返回</a> -->
                         </li>
                     </ul>
                 </div>
@@ -139,7 +140,7 @@
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">獎懲理由：</label>
 
-                    <div class="select">
+                    <!-- <div class="select">
                         <select class="form-select-bg-size:16px 12px;" aria-label="Default select example" id="reasonSelect" name="reasonSelect" onChange="update()">
                         <option selected>獎懲理由</option>
                         <option value="1">擔任110學年上學期輔導股長</option>
@@ -148,7 +149,7 @@
                         <button type="button" class="btn btn-danger" onclick="deleteSelect()">刪除選項</button>
                         <input type="text" id="inputSelect" placeholder="請輸入想新增的選項" />
                         <button type="button" class="btn btn-success" onclick="addSelect()">新增選項</button>
-                    </div>
+                    </div> -->
                     <textarea class="form-control" id="reason" name="reason" rows="3" placeholder="請詳細敘述申請內容"></textarea>
                 </div>
 
@@ -174,6 +175,7 @@
                 </div>
 
                 <input type="submit" class="btn btn-primary" value="確定送出">
+                <button type="button" class="btn btn-success" id="backbtn" onclick="history.back()">回到上一頁</button>
                 </form>
             </div>
         </div>

@@ -98,8 +98,16 @@ try{
     echo '</script>';
 }
 //顯示成功訊息
-echo '<script type ="text/JavaScript">';
-echo 'alert("使用成功，將回到首頁。"); window.location.href = "../index.php";';
-echo '</script>';
 $pdo = null;
 ?>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type ="text/JavaScript">
+Swal.fire(
+    '成功使用!',
+    '已上傳使用紀錄',
+     'success'
+).then(function(){
+    window.location.href = "../index.php";
+});
+
+</script>

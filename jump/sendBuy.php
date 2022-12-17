@@ -74,7 +74,7 @@ try{//新增prizelogs
         ':pId'          => "$pId",
         )
     );
-    $student_prize_id = $pdo->query('select count(*) from prizelogs')->fetchColumn(); 
+    $student_prize_id = $pdo->query('select count(*) from student_prize')->fetchColumn(); 
     $count = $query->rowCount();
     if($count == 0){//insert student_prize
         $stmt = $pdo->prepare("INSERT INTO `student_prize`(`id`, `sId`, `pId`, `amount`, `updateTime`, `oId`) VALUES (:id, :sId, :pId, :amount, :updateTime, :oId)");

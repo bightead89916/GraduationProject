@@ -41,6 +41,7 @@ $pdo = null;
     <script src="../jquery-qrcode-0.17.0.min.js"></script>
     <style>
         .center>div {
+
             display: flex;
             /* 水平置中 */
             justify-content: center;    
@@ -48,46 +49,56 @@ $pdo = null;
             align-content: center;      
             flex-wrap: wrap;
         }
+        #amount {
+            width: 20%;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="center">
-    <div class="font">
-        <?php
-        echo $sId;
-        echo "，";
-        echo $sName;
-        echo "，";
-        echo $pName;
-        ?>
-    </div>
-    <div><p>使用數量:</p></div>
-        <div>
+        <div class="font">
+            <?php
+            echo $sId;
+            echo "，";
+            echo $sName;
+            echo "，";
+            echo $pName;
+            ?>
+        </div>
+        <div><p>使用數量:</p></div>
+        <div class="selsect">
             <select class="form-select form-select-lg mb-3" id="amount" name="amount" aria-label="Default select example" required="required">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
             </select>
-            <input type="button" name="Btn" id="Btn" value="使用" onclick="printQRcode()">
+            <!-- <input type="button" name="Btn" id="Btn" value="使用" onclick="printQRcode()"> -->
         </div>
 
         <div id="jquery-qrcode-div"></div>
+        <center><button type="button" class="btn btn-success" id="backbtn" onclick="history.back()">回到上一頁</button></center>
     </div>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script>
+        printQRcode();
+        var select = document.getElementById("amount");
+        select.addEventListener('click', printQRcode);
+
+
         function printQRcode(){
             var select = document.getElementById("amount"); //定義select，方便之後取值
             var amount = select.options[select.selectedIndex].value; //將option的值存起來
 
             document.getElementById("jquery-qrcode-div").innerHTML = "";
 
-        $("#jquery-qrcode-div").qrcode({
-            render: 'div',
-            size: 250,
-            text: 'http://localhost/GraduationProject/jump/QRcodeSend.php?id=<?php echo $id?>&pId=<?php echo $pId?>&amount='+amount+'&sId=<?php echo $sId?>'
-        });}
+            $("#jquery-qrcode-div").qrcode({
+                render: 'div',
+                size: 250,
+                text: 'http://localhost/GraduationProject/jump/QRcodeSend.php?id=<?php echo $id?>&pId=<?php echo $pId?>&amount='+amount+'&sId=<?php echo $sId?>'
+            });
+        }
     </script>
 </body>
 

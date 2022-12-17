@@ -101,7 +101,7 @@ $pdo = null;
         .rightDiv table th {
             font-size: large;
             border: 1px solid #290023;
-            background: rgb(235, 234, 234);
+            
         }
 
         .rightDiv table thead {
@@ -112,6 +112,41 @@ $pdo = null;
         .dropdown {
             display: none;
         }
+
+table{
+  font-family: 'Oswald', sans-serif;
+  border-collapse:collapse;
+
+  overflow:hidden;
+  border-radius:10px 10px 0px 0px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+}
+
+th{
+  background-color:#009879;
+  color:#ffffff;
+  width:25vw;
+  height:75px;
+}
+
+td{
+  background-color:#ffffff;
+  width:25vw;
+  height:50px;
+  text-align:center;
+}
+
+tr{
+  border-bottom: 1px solid #dddddd;
+}
+
+tr:last-of-type{
+  border-bottom: 2px solid #009879;
+}
+
+tr:nth-of-type(even) td{
+  background-color:#f3f3f3;
+}
 
         @media (max-width: 768px) {
             .leftNav {

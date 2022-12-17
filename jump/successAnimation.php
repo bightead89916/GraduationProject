@@ -92,7 +92,7 @@
 
     <h2>成功!</h2>
     <script>
-        setTimeout("location.href='../index.php'", 4000); // 4秒後跳轉頁面
+        setTimeout("location.href='../office/office_info.php'", 2000); // 4秒後跳轉頁面
     </script>
 </body>
 

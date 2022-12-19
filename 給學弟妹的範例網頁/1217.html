@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.0/web3.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="1217abi.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <title>testweb</title>
+</head>
+
+<body>
+    <script>
+        var contractAddress = "0x3413d9700a5968a6230488aa2b84b0a2c0ce1adf"; //合約地址
+    </script>
+    <header>
+        <p>合約地址:
+            <span id="contractAddress">show contractAddress</span>
+        </p>
+        <div>
+            <p>錢包地址:
+                <span id="username">show address</span>
+            </p>
+        </div>
+    </header>
+    <div id="functions">
+        <label for="add_stuId">輸入學號: </label>
+        <input type="text" id="add_stuId">
+        <p></p>
+        <label for="add_score">輸入分數: </label>
+        <input type="text" id="add_score">
+        <p></p>
+        <button type="button" class="btn btn-danger btn-lg addData">
+        新增資料
+    </button>
+        <p></p>
+        <div>
+            <span id="showblockid">show blockid</span>
+        </div>
+        <label for="readDatabyBlockID">輸入區塊號碼: </label>
+        <input type="text" id="readDatabyBlockID">
+        <button type="button" class="btn btn-secondary btn-lg readData">
+        讀學號&分數
+    </button>
+        <div>
+            <span id="showsId">輸出學號</span>
+            <p></p>
+            <span id="showpoint">輸出分數</span>
+        </div>
+    </div>
+
+</body>
+<script>
+    let user;
+    var contract, userAccount;
+    window.onload = async function getuserAddress() {
+        try {
+            web3js = new Web3(window.ethereum); //建立web3連結
+            contract = new web3js.eth.Contract(abi, contractAddress); //連結合約
+            const accounts = await window.ethereum.request({ //查詢錢包地址
+                method: 'eth_requestAccounts'
+            });
+            user = accounts[0]; //將查詢到的錢包地址存進user，並顯示
+            $("#username").html(user);
+            $("#contractAddress").html(contractAddress);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+    $(".btn.addData").click(async() => { //新增學號&分數
+        try {
+            _stuId = document.getElementById("add_stuId").value; //讀取add_stuId按鈕的值
+            _score = document.getElementById("add_score").value;
+            await contract.methods.addPointList(_score, _stuId).send({ //調用abi中的addPointList方法，上傳至區塊鏈
+                from: user
+            }).then(function(data) { //取區塊號碼的值並顯示
+                $("#showblockid").html(data.blockNumber);
+                Swal.fire(
+                    'Good job!',
+                    '已成功上傳',
+                    'success'
+                )
+            });
+        } catch (error) {
+            alert(error.message);
+        }
+    })
+    $(".btn.readData").click(async() => { //查詢資料
+        try {
+            readDatabyBlockID = document.getElementById("readDatabyBlockID").value;
+            var readPointList = await contract.methods.readPointList(readDatabyBlockID).call({
+                from: user
+            });
+            $("#showsId").html(readPointList[0]);
+            $("#showpoint").html(readPointList[1]);
+            console.log(readPointList)
+        } catch (error) {
+            alert(error.message);
+        }
+    })
+</script>
+
+</html>
